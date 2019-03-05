@@ -2,4 +2,137 @@
 
 echo "Testing";
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+
+<div class="container">
+
+	<h3>Make Pagination</3>
+	<div class="table-responsive" id="pagination_data">
+	
+	</div>
+</div>
+
+<script>
+
+	jQuery(document).ready(function(){
+		load_data();
+		function load_data(page){
+			$.ajay({
+				url:"pagination.php",
+				method:"POST",
+				data:{
+					page:page
+				},
+				success:function(data){
+					jQuery('#pagination_data').html(data);
+				}
+			})
+		}
+		
+		jQuery(document).on('click', '.pagination_link', function(){
+			var page = jQuery(this).attr("id");
+		});
+		
+	});
+
+</script>
+
+
+pagination.php
+
+<?php
+include('db.php');
+
+$per_page=5;
+if (isset($_GET["page"])) {
+
+$page = $_GET["page"];
+
+}
+
+else {
+
+$page=1;
+
+}
+
+// Page will start from 0 and Multiple by Per Page
+$start_from = ($page-1) * $per_page;
+
+
+$qry_sel = "select * from student LIMIT $start_from, $per_page";
+$res = mysqli_query($conn, $qry_sel);
+$arr = mysqli_fetch_array($res);
+
+?>
+<!--<div id="target-content" >loading...</div>-->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ajax View</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+    <!-- jQuery Modal -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
+    <script src="jquery/jquery.js"></script>
+</head>
+<body>
+    
+    <div id="delete">
+    <div>
+        <a href="demo.php">Add</a>
+    </div>
+    <table border="1">
+        <tr>
+            <td>Id</td>
+            <td>FirstName</td>
+            <td>Image</td>
+            <td>Gender</td>
+            <td>Hobby</td>
+            <td>Action</td>
+        </tr>
+        <?php 
+            while($arr = mysqli_fetch_array($res)){?>
+        <tr>
+            <td><?php echo $arr['id']; ?></td>
+            <td><?php echo $arr['firstname']; ?></td>
+            <td><?php echo $arr['image']; ?></td>
+            <td><?php echo $arr['gender']; ?></td>
+            <td><?php echo $arr['hobby']; ?></td>
+            <td><button class="del" value="<?php echo $arr['id']; ?>">Delete</button>||
+            <a href="#ex1" class="popup" id="" value="<?php echo $arr['id']; ?>" rel="modal:open">Update</a></td>
+        </tr>
+            <?php } ?>
+    </table>
+
+
+                <div class="page-info">
+                    <?php
+                        $qry_sel = "select * from student";
+                        $res = mysqli_query($conn, $qry_sel);
+                        
+                        $total_record = mysqli_num_rows($res);
+                        $total_pages = ceil($total_record / $per_page);
+
+                        //Going to first page
+                        echo "<h3><a href='view.php?page=1' id='pagination'>".'First Page'."</a> ";
+
+                        for ($i=1; $i<=$total_pages; $i++) {
+
+                        echo "<a href='view.php?page=".$i."' id='pagination'>".$i."</a> ";
+                        };
+                        // Going to last page
+                        echo "<a href='view.php?page=$total_pages' id='pagination'>".'Last Page'."</a></h3>";
+
+                    ?>
+                </div>
+
+
+    </div>
+
+       
+
+</body>
+</html>
+
 ?>
