@@ -20,7 +20,7 @@ $request_method = $_SERVER["REQUEST_METHOD"];
 			break;
 		case 'PUT':
 			// Update Product
-			$product_id = intval($_GET["product_id"]);
+			@$product_id = intval($_GET["product_id"]);
 			update_product($product_id);
 			break;
 		case 'DELETE':
@@ -92,6 +92,7 @@ $request_method = $_SERVER["REQUEST_METHOD"];
 		$qry_ins = "INSERT INTO product (`productname`,`price`,`quantity`,`seller`)values('$productname','$price','$quantity','$seller')";
 		$res_ins = mysqli_query($connection, $qry_ins);
 		if($res_ins){
+			
 			$response=array(
 				'status' => 1,
 				'status_message' =>'Product Added Successfully.'
@@ -111,12 +112,13 @@ $request_method = $_SERVER["REQUEST_METHOD"];
 	{
 		global $connection;
 		parse_str(file_get_contents("php://input"),$post_vars);
-		$productname=$post_vars["productname"];
-		$price=$post_vars["price"];
-		$quantity=$post_vars["quantity"];
-		$seller=$post_vars["seller"];
-		$query="UPDATE products SET productname='{$productname}', price={$price}, quantity={$quantity}, seller='{$seller}' WHERE id=".$product_id;
-		if($query)
+		@$productname=$post_vars["productname"];
+		@$price=$post_vars["price"];
+		@$quantity=$post_vars["quantity"];
+		@$seller=$post_vars["seller"];
+		$query="UPDATE product SET `productname`='$productname', `price`='$price', `quantity`='$quantity', `seller`='$seller' WHERE product_id=".$product_id;
+		$update_res = mysqli_query($connection, $query);
+		if($update_res)
 		{
 			$response=array(
 				'status' => 1,
@@ -133,4 +135,7 @@ $request_method = $_SERVER["REQUEST_METHOD"];
 		header('Content-Type: application/json');
 		echo json_encode($response);
 	}
+
+	// Close database connection
+	mysqli_close($connection);
 ?>
