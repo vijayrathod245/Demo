@@ -1,19 +1,3 @@
-<?php
-  include('db.php');
-  if(@$_SESSION['admin']==''){
-    header("location:login.php");
-}
-if(isset($_SESSION['admin'])){
-	if((time() - $_SESSION['last_time']) > 5000000){
-		header("location:logout.php");
-	}else{
-		$_SESSION['last_time'] = time();
-	}
-}else{
-	header("location:login.php");
-}
-
-?>
 <!doctype html>
 <html>
   <head>
@@ -60,11 +44,8 @@ if(isset($_SESSION['admin'])){
           opacity:0}
       }
     </style>
-    <link href="css/style.css" rel="stylesheet">
-    <link href="css/custom.css" rel="stylesheet">
-    <link href="icons/css/themify-icons.css" rel="stylesheet">
-	  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-	
+    <link href="<?php echo base_url('projectstyle'); ?>/css/style.css" rel="stylesheet">
+    <link href="<?php echo base_url('projectstyle'); ?>/icons/css/themify-icons.css" rel="stylesheet">
   </head>
   <body class="app">
     <div id="loader">
@@ -75,7 +56,8 @@ if(isset($_SESSION['admin'])){
         const loader = document.getElementById('loader');
         setTimeout(() => {
           loader.classList.add('fadeOut');
-        }, 300);
+        }
+        , 300);
       }
     );
     </script>
@@ -85,15 +67,15 @@ if(isset($_SESSION['admin'])){
           <div class="sidebar-logo">
             <div class="peers ai-c fxw-nw">
               <div class="peer peer-greed">
-                <a class="sidebar-link td-n" href="dashboard.php">
+                <a class="sidebar-link td-n" href="index.html">
                   <div class="peers ai-c fxw-nw">
                     <div class="peer">
                       <div class="logo">
-                        <img src="assets/static/images/logo.png" alt="">
+                        <img src="<?php echo base_url('projectstyle'); ?>/assets/static/images/logo.png" alt="">
                       </div>
                     </div>
                     <div class="peer peer-greed">
-                      <h5 class="lh-1 mB-0 logo-text">Shopping Project
+                      <h5 class="lh-1 mB-0 logo-text">Adminator
                       </h5>
                     </div>
                   </div>
@@ -111,7 +93,7 @@ if(isset($_SESSION['admin'])){
           </div>
           <ul class="sidebar-menu scrollable pos-r">
             <li class="nav-item mT-30 active">
-              <a class="sidebar-link" href="index.html">
+              <a class="sidebar-lin k" href="index.html">
                 <span class="icon-holder">
                   <i class="c-blue-500 ti-home">
                   </i> 
@@ -124,7 +106,7 @@ if(isset($_SESSION['admin'])){
             <li class="nav-item dropdown">
               <a class="dropdown-toggle" href="javascript:void(0);">
                 <span class="icon-holder">
-                  <i class="c-red-500 ti-user">
+                  <i class="ti-user">
                   </i> 
                 </span>
                 <span class="title">Admin
@@ -136,40 +118,13 @@ if(isset($_SESSION['admin'])){
               </a>
               <ul class="dropdown-menu">
                 <li>
-                  <a class="sidebar-link" href="add_admin.php">Add Admin
+                  <a class="sidebar-link" href="<?php echo site_url('admin/admin'); ?>">Add Admin
                   </a>
                 </li>
                 <li>
-                  <a class="sidebar-link" href="view_admin.php">View Admin
+                  <a class="sidebar-link" href="<?php echo site_url('admin/admin/view'); ?>">View Admin
                   </a>
                 </li>
-                
-              </ul>
-            </li>
-
-            <li class="nav-item dropdown">
-              <a class="dropdown-toggle" href="javascript:void(0);">
-                <span class="icon-holder">
-                  <i class="c-red-500 ti-user">
-                  </i> 
-                </span>
-                <span class="title">User
-                </span> 
-                <span class="arrow">
-                  <i class="ti-angle-right">
-                  </i>
-                </span>
-              </a>
-              <ul class="dropdown-menu">
-                <li>
-                  <a class="sidebar-link" href="add_user.php">Add User
-                  </a>
-                </li>
-                <li>
-                  <a class="sidebar-link" href="view_user.php">View User
-                  </a>
-                </li>
-                
               </ul>
             </li>
 
@@ -586,43 +541,10 @@ if(isset($_SESSION['admin'])){
               <li class="dropdown">
                 <a href="" class="dropdown-toggle no-after peers fxw-nw ai-c lh-1" data-toggle="dropdown">
                   <div class="peer mR-10">
-                    <img class="w-2r bdrs-50p fixed-size" src="image/<?php 
-                      $id = $_SESSION['admin'];
-                      $type = $_SESSION['logtype'];
-                      
-                      if($type=='admin'){
-                            $qry = "select image from admin where id='$id'";
-                            $res = mysqli_query($conn, $qry);
-                            $arr = mysqli_fetch_array($res);
-                            echo $arr['image'];
-                          }else{
-                            $qry = "select image from user where id='$id'";
-                            $res = mysqli_query($conn, $qry);
-                            $arr = mysqli_fetch_array($res);
-                            echo $arr['image'];
-                          }
-                    ?>" alt="" />
+                    <img class="w-2r bdrs-50p" src="https://randomuser.me/api/portraits/men/10.jpg" alt="">
                   </div>
                   <div class="peer">
-                    <span class="fsz-sm c-grey-900">
-
-                    <?php 
-                    $id = $_SESSION['admin'];
-                    $type = $_SESSION['logtype'];
-                    
-                    if($type=='admin'){
-                          $qry = "select name from admin where id='$id'";
-                          $res = mysqli_query($conn, $qry);
-                          $arr = mysqli_fetch_array($res);
-                          echo $arr['name'];
-                        }else{
-                          $qry = "select fullname from user where id='$id'";
-                          $res = mysqli_query($conn, $qry);
-                          $arr = mysqli_fetch_array($res);
-                          echo $arr['fullname'];
-                        }
-                        ?>
-
+                    <span class="fsz-sm c-grey-900">John Doe
                     </span>
                   </div>
                 </a>
@@ -643,14 +565,6 @@ if(isset($_SESSION['admin'])){
                       </span>
                     </a>
                   </li>
-				  <li>
-                    <a href="changepassword.php" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
-                      <i class="ti-user mR-10">
-                      </i> 
-                      <span>ChanPass
-                      </span>
-                    </a>
-                  </li>
                   <li>
                     <a href="email.html" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
                       <i class="ti-email mR-10">
@@ -662,7 +576,7 @@ if(isset($_SESSION['admin'])){
                   <li role="separator" class="divider">
                   </li>
                   <li>
-                    <a href="logout.php" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
+                    <a href="<?php echo site_url('admin/login/logout/'); ?>" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
                       <i class="ti-power-off mR-10">
                       </i> 
                       <span>Logout

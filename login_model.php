@@ -1,58 +1,62 @@
 <?php 
-class Login_model extends CI_Model
-	{
+class Login_model extends CI_Model{
 		public function select()
 			{
 				$id=$this->session->userdata('admin');
 				$logtype=$this->session->userdata('logtype');
-				//echo $logtype;
-				//exit;
-					if($logtype=='admin')
-						{
-							$this->db->where('id',$id);
-							$qry_sel=$this->db->get('admin');
-							$arr=$qry_sel->row_array();
-							
-						}
-						else
-						{
-						$this->db->where('id',$id);
-						$qry_sel=$this->db->get('cabuser');
-						$arr=$qry_sel->row_array();
-						}
-						return $arr;
-			}
-		public function insert()
-			{
-				$logtype=$this->input->post('logtype');
+				
 				if($logtype=='admin')
 					{
-						$name=$this->input->post('name');
-						$password=$this->input->post('password');
-						$this->db->where('name',$name);
-						$this->db->where('password',$password);
-						$qry=$this->db->get('admin');
+						$this->db->where('id',$id);
+						$qry_sel=$this->db->get('admin');
+						$arr=$qry_sel->row_array();
 					}
 					else
 					{
-						$name=$this->input->post('name');
-						$password=$this->input->post('password');
-						$this->db->where('email',$name);
-						$this->db->where('password',$password);
-						$qry=$this->db->get('cabuser');
+						$this->db->where('id',$id);
+						$qry_sel=$this->db->get('user');
+						$arr=$qry_sel->row_array();
 					}
+					return $arr;
+				
+			}
+		public function insert()
+			{
+				//$id=$this->session->userdata('admin');
+				$logtype=$this->input->post('logtype');
+				if($logtype=='admin')
+				{
+				$email = $this->input->post('email');
+				$password = $this->input->post('password');
+				$this->db->where('email',$email);
+				$this->db->where('password',$password);
+				$qry=$this->db->get('admin');
+				//echo $this->db->last_query();
+				echo "admin";
+				}
+				else
+				{
+				$email = $this->input->post('email');
+				$password = $this->input->post('password');
+				$this->db->where('email',$email);
+				$this->db->where('password',$password);
+				$qry=$this->db->get('user');
+				//echo "user";
+				}
 				$num=$qry->num_rows();
-				if($num==1)
+				if($num)
 					{
 						$arr=$qry->row_array();
 						$this->session->set_userdata('logtype',$logtype);
 						$this->session->set_userdata('admin',$arr['id']);
+						
 						redirect('admin/dashboard');
 					}
 					else
 					{
-						echo "invalid";
+						echo "Invalid email?";
 					}
 			}
 	}
+
 ?>

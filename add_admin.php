@@ -1,20 +1,4 @@
-<?php 
-    include('header.php'); 
-	//include('db.php');
-    if(@$_POST['submit']){
-        
-        $name = $_POST['name'];
-        $email = $_POST['email'];
-        $password = $_POST['password'];
-        $image = rand(0,1000). $_FILES['image']['name'];
-			  $path = 'image/';
-		  	move_uploaded_file($_FILES['image']['tmp_name'],$path.$image);
-
-        echo $qry = "insert into admin(`name`,`email`,`password`,`image`)values('$name','$email','$password','$image')";
-        $res = mysqli_query($conn, $qry);
-    }
-
-?>
+<?php $this->load->view('admin/header'); ?>
         <main class="main-content bgc-grey-100">
           <div id="mainContent">
             <div class="row gap-20 masonry pos-r">
@@ -29,52 +13,23 @@
                     <div class="form-group">
                         <label for="exampleInputEmail1">Name
                         </label> 
-                        <input type="text" name="name"  class="form-control"  aria-describedby="emailHelp" placeholder="Enter name"> 
+                        <input type="text" name="name" value="<?php echo @$data['name']; ?>" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter name"> 
                       </div>
                       <div class="form-group">
                         <label for="exampleInputEmail1">Email
                         </label> 
-                        <input type="email" name="email" class="form-control"  aria-describedby="emailHelp" placeholder="Enter email"> 
+                        <input type="email" name="email" value="<?php echo @$data['email']; ?>" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email"> 
                       </div>
                       <div class="form-group">
                         <label for="exampleInputPassword1">Password
                         </label> 
-                        <input type="password" name="password" class="form-control"  placeholder="Password">
+                        <input type="password" name="password" value="<?php echo @$data['password']; ?>" class="form-control" id="exampleInputPassword1" placeholder="Password">
                       </div>
                       <div class="form-group">
-                          <label for="exampleFormControlFile1">Image</label>
-                          <input type="file" name="image"  class="form-control-file">
-							            
+                            <label for="exampleFormControlFile1">Image</label>
+                            <input type="file" name="image"  class="form-control-file" id="exampleFormControlFile1">
+							<img src="<?php echo base_url('image/'.@$data['image']); ?>" width="80px" height="80px"/>
                       </div>
-					  
-					  <div class="form-group">
-                          <label for="inputState">Country</label>
-                          <select class="form-control col-md-6" id="country" name="country">
-							<option selected>Choose Country...</option>
-							  <?php $country_qry="select * from country";
-								$country_res=mysqli_query($conn, $country_qry);
-								while($country_arr=mysqli_fetch_array($country_res)){?>
-							<option value="<?php echo $country_arr['country_id'];?>"><?php echo $country_arr['countryname'];?>
-							</option>
-							<?php  } ?>
-						</select>
-                        </div>
-						
-						<div class="form-group">
-                          <label for="inputState">State</label>
-                          <select class="form-control col-md-6" name="state" id="state">
-							<option selected>Choose State...</option>
-							</select>
-                        </div>
-						
-						<div class="form-group">
-                          <label for="inputState">City</label>
-                          <select class="form-control col-md-6" name="city" id="city">
-							<option selected>Choose City...</option>
-						</select>
-                        </div>
-
-					  
                       <input type="submit" name="submit" class="btn btn-primary" value="Submit" />
                       
                     </form>
@@ -85,7 +40,12 @@
             </div>
           </div>
         </main>
-       
+        <footer class="bdT ta-c p-30 lh-0 fsz-sm c-grey-600">
+          <span>Copyright © 2017 Designed by 
+            <a href="https://colorlib.com" target="_blank" title="Colorlib">Colorlib
+            </a>. All rights reserved.
+          </span>
+        </footer>
       </div>
     </div>
-    <?php include('footer.php'); ?>
+    <?php $this->load->view('admin/footer'); ?>

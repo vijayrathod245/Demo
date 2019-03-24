@@ -1,16 +1,10 @@
-<?php 
-    include('header.php'); 
-
-    $qry_sel = "select * from admin";
-    $res_sel = mysqli_query($conn, $qry_sel);
-
-?>
+<?php $this->load->view('admin/header'); ?>
 <main class="main-content bgc-grey-100">
           <div id="mainContent">
             <div class="container-fluid">
               <h4 class="c-grey-900 mT-10 mB-30">Admin Tables
               </h4>
-              <div class="row" id="delete">
+              <div class="row">
                 <div class="col-md-12">
                   <div class="bgc-white bd bdrs-3 p-20 mB-20">
                     <h4 class="c-grey-900 mB-20">Admin Data Table
@@ -18,10 +12,6 @@
                     <table id="dataTable" class="table table-striped table-bordered" cellspacing="0" width="100%">
                       <thead>
                         <tr>
-						<th>
-							<input type="checkbox" name="checkall" id="checkall"/> 
-							<button id="deleteall" value="delete">Delete</button>
-						</th>
                           <th>Id
                           </th>
                           <th>Name
@@ -52,25 +42,23 @@
                           </th>
                         </tr>
                       </tfoot>
-                      <?php while($arr = mysqli_fetch_array($res_sel)){ ?>
+                      <?php foreach($data as $row){?>
                         <tr>
-						<td><input type="checkbox" name="del[]" class="del" value="<?php echo $arr['id']; ?>"></td>
-                          <td><?php echo $arr['id']; ?>
+                          <td><?php echo $row['id']; ?>
                           </td>
-                          <td><?php echo $arr['name']; ?>
+                          <td><?php echo $row['name']; ?>
                           </td>
-                          <td><?php echo $arr['email']; ?>
+                          <td><?php echo $row['email']; ?>
                           </td>
-                          <td><?php echo $arr['password']; ?>
+                          <td><?php echo $row['password']; ?>
                           </td>
-                          <td><img id="image" src="image/<?php echo @$arr['image'];?>" width="25px" height="25px" >
+                          <td><img src="<?php echo base_url('image/'.@$row['image']);?>" width="50px" height="50px" >
                           </td>
-                          <td>
-                          <button type="button" class="btn btn-primary deladdmin" value="<?php echo $arr['id']; ?>" data-toggle="modal" data-target="#">Delete</button>
-                          <button type="button" class="btn btn-primary popup" data-toggle="modal" value="<?php echo $arr['id']; ?>"  data-target="#adminupdatemodel">Update</button>
-						              </td>
+                          <td><a href="<?php echo site_url('admin/admin/delete/'.$row['id']);?>">Delete</a>||
+							<a href="<?php echo site_url('admin/admin/select/'.$row['id']); ?>">Update</a>
+						  </td>
                         </tr>
-                        <?php } ?>
+                        <?php }?>
                     
                     </table>
                   </div>
@@ -79,6 +67,12 @@
             </div>
           </div>
         </main>
+        <footer class="bdT ta-c p-30 lh-0 fsz-sm c-grey-600">
+          <span>Copyright © 2017 Designed by 
+            <a href="https://colorlib.com" target="_blank" title="Colorlib">Colorlib
+            </a>. All rights reserved.
+          </span>
+        </footer>
       </div>
     </div>
-    <?php include('footer.php'); ?>
+    <?php $this->load->view('admin/footer'); ?>
