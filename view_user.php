@@ -1,3 +1,5 @@
+SELECT countryname FROM `country` GROUP BY countryname DESC LIMIT 1 OFFSET 1
+
 <?php 
     include('header.php'); 
 
