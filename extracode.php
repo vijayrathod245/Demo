@@ -44,3 +44,44 @@ select name from tablename where name in ('india');
 
 /* 1 to 10 id show */
 select * from tablename where id between 1 and 10;
+
+
+
+
+<img class="w-2r bdrs-50p" src="<?php echo base_url()?>image/<?php
+					$id=$this->session->userdata('admin');
+					$logtype=$this->session->userdata('logtype'); 	
+					if($logtype=='admin'){
+						$this->db->select('image');
+						$this->db->where('id',$id);
+						$qry_sel=$this->db->get('admin');
+						$arr=$qry_sel->row_array();
+						echo($arr['image']);
+					}else{
+						$this->db->select('image');
+						$this->db->where('id',$id);
+						$qry_sel=$this->db->get('user');
+						$arr=$qry_sel->row_array();
+						echo($arr['image']);
+					}?>" alt="">
+					
+                  </div>
+                  <div class="peer">
+                    <span class="fsz-sm c-grey-900">
+						<?php 
+					$id=$this->session->userdata('admin');
+					$logtype=$this->session->userdata('logtype');	
+					if($logtype=='admin'){
+						$this->db->select('name');
+						$this->db->where('id',$id);
+						$qry_sel=$this->db->get('admin');
+						$arr=$qry_sel->row_array();
+						echo($arr['name']);
+					}else{
+						$this->db->select('fullname');
+						$this->db->where('id',$id);
+						$qry_sel=$this->db->get('user');
+						$arr=$qry_sel->row_array();
+						echo($arr['fullname']);
+					}?>
+                    </span>
