@@ -38,5 +38,9 @@ echo($data[0]['age']);
 /* Last to second record show */
 
 SELECT countryname FROM `country` GROUP BY countryname DESC LIMIT 1 OFFSET 1
+  
+/* Display only india record */
+select name from tablename where name in ('india');
 
-
+/* 1 to 10 id show */
+select * from tablename where id between 1 and 10;
