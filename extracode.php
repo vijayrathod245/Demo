@@ -190,3 +190,55 @@ function hook_bootstrap() {
 
 ?>
 
+
+/ User a and in codeiginiter/
+
+view page
+
+<td>
+							<?php 
+								$status = $row['status'];
+								if($status == 1){  ?>
+									<a href="<?php echo base_url();?>/admin/admin/update_status?sid=<?php echo $row['id']; ?>&sval=<?php echo $row['status']; ?>" class="btn btn-success">Active</a>
+								<?php }else{
+									?>
+									<a href="<?php echo base_url();?>/admin/admin/update_status?sid=<?php echo $row['id']; ?>&sval=<?php echo $row['status']; ?>" class="btn btn-danger">Inactive</a>
+									<?php 
+								}
+						  ?>
+						  
+                          </td>
+
+model page
+
+public function update_status(){
+		$id = $_REQUEST['sid'];
+		$sval = $_REQUEST['sval'];
+		if($sval == 1){
+			$status = 0;
+		}else{
+			$status = 1;
+		}
+		$arr = array('status'=>$status);
+		$this->db->where('id', $id);
+		return $this->db->update('admin', $arr);
+	}
+
+controller page
+
+public function update_status(){
+		if(isset($_REQUEST['sval'])){
+			$this->load->model('admin/admin_model');
+			//$up_status = $this->admin->update_status();
+			$up_status = $this->admin_model->update_status();
+			if($up_status > 0){
+				$this->session->set_flashdata('message', 'Status update successfully');
+				$this->session->set_flashdata('message_class', 'alert-success');
+			}else{
+				$this->session->set_flashdata('message', 'Status not update successfully');
+				$this->session->set_flashdata('message_class', 'alert-danger');
+			}
+			return redirect('admin/admin/view');
+		}
+	}
+
