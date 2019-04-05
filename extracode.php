@@ -241,4 +241,22 @@ public function update_status(){
 			return redirect('admin/admin/view');
 		}
 	}
+/* Login model condition */
 
+if($num)
+					{
+						$arr=$qry->row_array();
+						if($arr['status']==1){
+						
+						$this->session->set_userdata('logtype',$logtype);
+						$this->session->set_userdata('admin',$arr['id']);
+						
+						redirect('admin/dashboard');
+						}else{
+							echo "Please contact admin";
+						}
+					}
+					else
+					{
+						echo "Invalid email?";
+					}
