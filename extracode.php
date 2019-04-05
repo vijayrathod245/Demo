@@ -253,10 +253,16 @@ if($num)
 						
 						redirect('admin/dashboard');
 						}else{
-							echo "Please contact admin";
+							$this->session->set_flashdata('msg', 'Please contact admin');
 						}
 					}
 					else
 					{
 						echo "Invalid email?";
 					}
+
+/* login page */
+
+<?php if($this->session->flashdata('msg')): ?>
+			<h5 class="msg-alert"><?php echo $this->session->flashdata('msg'); ?></h5>
+		<?php endif; ?>
