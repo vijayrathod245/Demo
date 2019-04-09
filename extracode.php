@@ -266,3 +266,9 @@ if($num)
 <?php if($this->session->flashdata('msg')): ?>
 			<h5 class="msg-alert"><?php echo $this->session->flashdata('msg'); ?></h5>
 		<?php endif; ?>
+
+/* Hobby use */
+$hob =implode("/",$this->input->post('hobby'));
+ 		
+		$_POST['dob'] = $_POST['yyyy'].'-'.$_POST['mm'].'-'.$_POST['dd'];
+		$dob=$this->input->post('dob');
