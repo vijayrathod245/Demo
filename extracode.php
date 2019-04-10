@@ -272,3 +272,20 @@ $hob =implode("/",$this->input->post('hobby'));
  		
 		$_POST['dob'] = $_POST['yyyy'].'-'.$_POST['mm'].'-'.$_POST['dd'];
 		$dob=$this->input->post('dob');
+
+
+/* Join query */
+
+category            album                   
+  cat_id             album_id
+  cat_name           cat_id
+					 album_name
+
+
+
+$this->db->select('*');
+$this->db->from('album');
+$this->db->join('category','category.cat_id=album.cat_id');
+$qry = $this->db->get('album');
+$res = $qry->result_arry();
+return $res;
