@@ -1,0 +1,1951 @@
+accountinginab.com
+azbride.com
+cigarboxpa.com
+freemanbuilding.com
+Keystoker.com
+pawprintspetsalon.com
+schuylkill.com
+westroofingsystems.com
+http://podevweb.info/vitos/
+http://integral-lighting.com
+http://tbproductions.themezones.com/
+https://www.welbilthomes.net/
+https://www.wernerlumber.com/
+https://www.cigarboxpa.com/
+https://www.wernerlumber.com/
+http://podevweb.info/carl/
+
+
+
+
+/* Function.php file */
+
+
+/* Function.php */
+
+<?php
+/**
+ * Twenty Seventeen functions and definitions
+ *
+ * @link https://developer.wordpress.org/themes/basics/theme-functions/
+ *
+ * @package WordPress
+ * @subpackage Twenty_Seventeen
+ * @since 1.0
+ */
+ 
+//parent theme css enqueue  
+add_action( 'wp_enqueue_scripts', 'accounting_parent_styles' );
+function accounting_parent_styles() {
+    //wp_enqueue_style( 'parent-style', get_template_directory_uri() . '/style.css' );
+	
+	wp_enqueue_style( 'bootstrap-style', get_stylesheet_directory_uri() . '/assets/css/bootstrap-select.min.css' );
+	wp_enqueue_style( 'bootstrap-min', get_stylesheet_directory_uri() . '/assets/css/bootstrap.min.css' );
+	
+	 wp_enqueue_script( 'jquery-slim', get_stylesheet_directory_uri() . '/assets/scripts/jquery-slim-min.js' );
+	 wp_enqueue_script( 'popper-min', get_stylesheet_directory_uri() . '/assets/scripts/popper.min.js' );
+	wp_enqueue_script( 'bootstrap-min', get_stylesheet_directory_uri() . '/assets/scripts/bootstrap.min.js' );
+	wp_enqueue_script( 'bootstrap-js', get_stylesheet_directory_uri() . '/assets/scripts/bootstrap-select.min.js' );
+	wp_enqueue_script( 'Function-js', get_stylesheet_directory_uri() . '/assets/scripts/Function.js' ); 
+}
+
+
+// create custom post type for client
+
+add_action( 'init', 'custom_post_client' );
+function custom_post_client() {
+    $labels = array(
+        'name'                  => _x( 'Clients', 'Post type general name', 'textdomain' ),
+        'singular_name'         => _x( 'Client', 'Post type singular name', 'textdomain' ),
+        'menu_name'             => _x( 'Clients', 'Admin Menu text', 'textdomain' ),
+        'name_admin_bar'        => _x( 'Client', 'Add New on Toolbar', 'textdomain' ),
+        'add_new'               => __( 'Add New', 'textdomain' ),
+        'add_new_item'          => __( 'Add New Client', 'textdomain' ),
+        'new_item'              => __( 'New Client', 'textdomain' ),
+        'edit_item'             => __( 'Edit Client', 'textdomain' ),
+        'view_item'             => __( 'View Client', 'textdomain' ),
+        'all_items'             => __( 'All Clients', 'textdomain' ),
+        'search_items'          => __( 'Search Clients', 'textdomain' ),
+        'parent_item_colon'     => __( 'Parent Clients:', 'textdomain' ),
+        'not_found'             => __( 'No clients found.', 'textdomain' ),
+        'not_found_in_trash'    => __( 'No clients found in Trash.', 'textdomain' ),
+       
+    );
+ 
+    $args = array(
+        'labels'             => $labels,
+        'public'             => true,
+        'publicly_queryable' => true,
+        'show_ui'            => true,
+        'show_in_menu'       => true,
+        'query_var'          => true,
+        'rewrite'            => array( 'slug' => 'clients' ),
+        'capability_type'    => 'post',
+        'has_archive'        => true,
+        'hierarchical'       => false,
+        'menu_position'      => null,
+        'supports'           => array( 'title', 'editor', 'author', 'thumbnail', 'excerpt', 'comments' ),
+    );
+ 
+    register_post_type( 'clients', $args );
+	
+	
+	$labels = array(
+        'name'              => _x( 'Categories', 'taxonomy general name', 'textdomain' ),
+        'singular_name'     => _x( 'Category', 'taxonomy singular name', 'textdomain' ),
+        'search_items'      => __( 'Search Categories', 'textdomain' ),
+        'all_items'         => __( 'All Categories', 'textdomain' ),
+        'parent_item'       => __( 'Parent Category', 'textdomain' ),
+        'parent_item_colon' => __( 'Parent Category:', 'textdomain' ),
+        'edit_item'         => __( 'Edit Category', 'textdomain' ),
+        'update_item'       => __( 'Update Category', 'textdomain' ),
+        'add_new_item'      => __( 'Add New Category', 'textdomain' ),
+        'new_item_name'     => __( 'New Category Name', 'textdomain' ),
+        'menu_name'         => __( 'Category', 'textdomain' ),
+    );
+ 
+    $category = array(
+        'hierarchical'      => true,
+        'labels'            => $labels,
+        'show_ui'           => true,
+        'show_admin_column' => true,
+        'query_var'         => true,
+        'rewrite'           => array( 'slug' => 'ccategory' ),
+    );
+ 
+    register_taxonomy( 'ccategory', array( 'clients' ), $category );
+}
+ 
+
+//create custom search
+
+function custom_rewrite_basic() {
+  		
+	add_rewrite_rule('^top-([^/]*)-professionals-in-([^/]*)/?', 'index.php?page_id=53', 'top');
+	
+	$search_specialty = implode('-',$_POST['specialty']);
+	$search_locations =  implode('-',$_POST['locations']);
+	$search_industries = implode('-',$_POST['industries']);
+	$search_revenue = implode('-',$_POST['revenue']);
+
+	if(isset($_POST['locations']) || isset($_POST['industries'])|| isset($_POST['specialty'])|| isset($_POST['revenue'])){
+		
+		if(!empty($search_locations)){
+			$siteurl = get_site_url().'/top-'.$search_specialty.'-accounting-professionals-in-'.$search_locations.'?industries='.$search_industries.'&revenue='.$search_revenue.'';
+		}else{
+			$siteurl = get_site_url().'/top-'.$search_specialty.'-accounting-professionals-in-usa?industries='.$search_industries.'&revenue='.$search_revenue.'';
+		}
+		wp_redirect($siteurl);
+		exit();
+	}
+	
+}
+add_action('init', 'custom_rewrite_basic');
+
+//Class_Name_Walker class is use to direct add anchor
+class Class_Name_Walker extends Walker_Nav_Menu
+{
+    
+	function start_el( &$output, $item, $depth = 0, $args = array(), $id = 0 )      {
+	$indent = ( $depth ) ? str_repeat( "\t", $depth ) : '';
+
+	$class_names = $value = '';
+
+	$classes = empty( $item->classes ) ? array() : (array) $item->classes;
+	$classes[] = 'menu-item-' . $item->ID;
+
+	$class_names = join( ' ', apply_filters( 'nav_menu_css_class', array_filter( $classes ), $item, $args ) );
+	$class_names = $class_names ? ' class="' . esc_attr( $class_names ) . '"' : '';
+
+	$id = apply_filters( 'nav_menu_item_id', 'menu-item-'. $item->ID, $item, $args );
+	$id = $id ? ' id="' . esc_attr( $id ) . '"' : '';
+
+	$atts = array();
+	$atts['title']  = ! empty( $item->attr_title ) ? $item->attr_title : '';
+	$atts['target'] = ! empty( $item->target )     ? $item->target     : '';
+	$atts['rel']    = ! empty( $item->xfn )        ? $item->xfn        : '';
+	$atts['href']   = ! empty( $item->url )        ? $item->url        : '';
+
+	$atts = apply_filters( 'nav_menu_link_attributes', $atts, $item, $args );
+
+	$attributes = '';
+	foreach ( $atts as $attr => $value ) {
+	if ( ! empty( $value ) ) {
+		$value = ( 'href' === $attr ) ? esc_url( $value ) : esc_attr( $value );
+		$attributes .= ' ' . $attr . '="' . $value . '"';
+	}
+	}
+	$item_output = $args->before;
+	$item_output .= '<a'. $attributes .$class_names.'>';
+	$item_output .= $args->link_before . apply_filters( 'the_title', $item->title, $item->ID ) . $args->link_after;
+	$item_output .= '</a>';
+	$item_output .= $args->after;
+
+	$output .= apply_filters( 'walker_nav_menu_start_el', $item_output, $item, $depth, $args );
+	}
+}
+
+
+
+
+function twenty_customize_register( $wp_customize ) {
+
+    // Add Section
+    $wp_customize->add_section('slideshow', array(
+        'title'             => __('Home Section One', 'name-theme'), 
+        'priority'          => 70,
+    )); 
+	
+	$wp_customize->add_section('homesectiontwo', array(
+        'title'             => __('Home Section Two', 'name-theme'), 
+        'priority'          => 80,
+    ));
+
+	$wp_customize->add_section('homesectionthree', array(
+        'title'             => __('Home Section Three', 'name-theme'), 
+        'priority'          => 90,
+    ));	
+
+    // Add Settings
+	$wp_customize->add_setting('slider_image_one', array(
+        'transport'         => 'refresh',
+        'height'         => 325,
+    ));	
+
+	$wp_customize->add_setting( 'slider_text', array(
+        'default'        => 'default_value',
+    ));
+	
+	$wp_customize->add_setting('second_title', array(
+        'transport'         => 'refresh',
+        'height'         => 326,
+    ));
+
+	$wp_customize->add_setting('second_section_one', array(
+        'transport'         => 'refresh',
+        'height'         => 326,
+    ));
+	
+	$wp_customize->add_setting('second_section_two', array(
+        'transport'         => 'refresh',
+        'height'         => 327,
+    ));
+	
+	$wp_customize->add_setting('second_section_three', array(
+        'transport'         => 'refresh',
+        'height'         => 328,
+    ));
+	
+	
+	$wp_customize->add_setting('three_section_one', array(
+        'transport'         => 'refresh',
+        'height'         => 329,
+    ));
+	
+	$wp_customize->add_setting('three_section_btn_name', array(
+        'transport'         => 'refresh',
+        'height'         => 330,
+    ));
+	
+	$wp_customize->add_setting('three_section_btn_url', array(
+        'transport'         => 'refresh',
+        'height'         => 331,
+    ));
+	//add control
+	$wp_customize->add_control( 'slider_text', array(
+        'label'   => 'Slider Text',
+        'section' => 'slideshow',
+        'type'    => 'text',
+    ));
+	
+	$wp_customize->add_control( 'second_title', array(
+        'label'   => 'Section Title ',
+        'section' => 'homesectiontwo',
+        'type'    => 'text',
+    ));
+	
+	$wp_customize->add_control( 'second_section_one', array(
+        'label'   => 'Section One ',
+        'section' => 'homesectiontwo',
+        'type'    => 'textarea',
+    ));
+	
+	$wp_customize->add_control( 'second_section_two', array(
+        'label'   => 'Section Two ',
+        'section' => 'homesectiontwo',
+        'type'    => 'textarea',
+    ));
+	
+	$wp_customize->add_control( 'second_section_three', array(
+        'label'   => 'Section Three ',
+        'section' => 'homesectiontwo',
+        'type'    => 'textarea',
+    ));
+	
+	
+	$wp_customize->add_control( 'three_section_one', array(
+        'label'   => 'Section Title ',
+        'section' => 'homesectionthree',
+        'type'    => 'text',
+    ));
+
+	$wp_customize->add_control( 'three_section_btn_name', array(
+        'label'   => 'Button Title ',
+        'section' => 'homesectionthree',
+        'type'    => 'text',
+    ));
+	
+	$wp_customize->add_control( 'three_section_btn_url', array(
+        'label'   => 'Button Url ',
+        'section' => 'homesectionthree',
+        'type'    => 'url',
+    ));
+	
+	$wp_customize->add_control( new WP_Customize_Image_Control( $wp_customize, 'customizer_setting_home_control', array(
+        'label'             => __('Slider Image', 'name-theme'),
+        'section'           => 'slideshow',
+        'settings'          => 'slider_image_one',    
+    )));
+  
+	$wp_customize->add_control( new WP_Customize_Image_Control( $wp_customize, 'custom_logo', array(
+        'label'             => __('Logo', 'name-theme'),
+        'section'           => 'title_tagline',
+        'settings'          => 'custom_logo', 
+	    'priority'   => 1
+		
+    )));
+	
+	
+}
+add_action('customize_register', 'twenty_customize_register');
+
+
+
+
+add_action( 'edit_form_after_editor', 'short_description_client' );
+
+function short_description_client()
+{
+    global $post;
+    if( 'clients' != $post->post_type )
+        return;
+
+    $editor1 = get_post_meta( $post->ID, '_short_desc_editor', true);
+
+    echo '<h2>Short description</h2>';
+	echo wp_editor( $editor1, 'short_desc_editor', array( 'textarea_name' => 'short_desc_editor','textarea_rows' => 5,  'editor_height' => 125 ) );
+}
+
+add_action( 'save_post', 'short_description_client_save', 10, 2 );
+function short_description_client_save( $post_id, $post_object )
+{
+	if ( isset( $_POST['short_desc_editor'] )){
+        update_post_meta( $post_id, '_short_desc_editor', $_POST['short_desc_editor'] );
+	}
+}
+
+function show_post_custom($atts) {
+	/* global $post;
+    $post_slug = $post->post_name; */
+	
+    $atts = shortcode_atts( [
+        "post_name" => '',
+        "category" => '',
+        ], $atts );
+	
+	 $post_type =  $atts['post_name'];
+	 $category_name = $atts['category'];
+	 
+	 $terms = get_terms( array(
+		'taxonomy' => $category_name,
+		'hide_empty' => true,
+	));
+	
+	$articles = '<div class="container">
+					<div class="row">
+						<div class="col-lg-12 all-btn-info">
+						<button class="btn filter-button btn_active" data-filter="all">All</button>'; 
+						$add_id_category  = array();
+						$add_category  = array();
+						foreach($terms as $key => $terms_name){
+							
+							$add_id_category[$key] = $terms_name->term_id;
+							$add_category[$key]['terms_slug']=  $terms_name->slug;
+							$add_category[$key]['terms_name']=  $terms_name->name;
+							$category_slug =  $terms_name->slug;
+							$category =  $terms_name->name;
+							$articles .= '<button class="btn btn-default filter-button" data-filter="'.$category_slug.'">'.$category.'</button>';
+						}
+					$articles .= '</div>';
+	
+	$post_query = new WP_Query(array(
+        'post_type' => $post_type,
+        'posts_per_page' => -1,
+        'tax_query' => array(
+            array(
+                'taxonomy' => $category_name,
+                'field' => 'term_id',
+                'terms' => $add_id_category 
+        ))));
+	
+	
+
+
+	 if($post_query->have_posts() ):
+    
+     while( $post_query->have_posts() ): $post_query->the_post();
+
+			 $post_id =  get_the_id();
+			 $categories = get_the_category($post);
+			
+			foreach($categories as $categories_data){
+				/*echo '<pre>';
+				print_r($categories_data);*/
+				//echo $categories_data->term_id;
+				
+				$category_link = get_category_link ($categories_data->term_id);
+		
+				
+
+$articles .='<div class="col-lg-4 col-md-6 col-sm-12 col-xs-12 filter '.$categories_data->slug .'">
+               <div class="categories-detail">
+					<div class="article-item"><a href="'.$category_link.'">'.$categories_data->name.'</a></div>
+					<h3 class="article-title"><a href="'.get_the_permalink().'">'.get_the_title().'</a></h3>
+					<div class="art-date-info">
+						<span><a href="'.$category_link.'">'.get_author_name().'</a></span>
+						<span>'.get_the_date().'</span>
+					</div>
+					<div class="article-content">'.get_the_excerpt().'</div>
+					<a class="art-readmore" href="'.get_the_permalink().'">Read More →</a>
+			   </div>
+            </div>';
+			
+			wp_reset_postdata();
+			}
+	     endwhile;
+		 
+    endif;
+	
+	
+	$articles .= '</div></div>';
+			
+	return $articles;
+}
+add_shortcode('show_articles', 'show_post_custom');
+
+
+function new_excerpt_more($more) {
+    return '...';
+}
+add_filter('excerpt_more', 'new_excerpt_more', 21 );
+
+
+
+/* New Code */
+
+<?php
+/**
+ * Twenty Nineteen functions and definitions
+ *
+ * @link https://developer.wordpress.org/themes/basics/theme-functions/
+ *
+ * @package WordPress
+ * @subpackage Twenty_Nineteen
+ * @since 1.0.0
+ */
+
+/**
+ * Twenty Nineteen only works in WordPress 4.7 or later.
+ */
+if ( version_compare( $GLOBALS['wp_version'], '4.7', '<' ) ) {
+	require get_template_directory() . '/inc/back-compat.php';
+	return;
+}
+
+if ( ! function_exists( 'twentynineteen_setup' ) ) :
+	/**
+	 * Sets up theme defaults and registers support for various WordPress features.
+	 *
+	 * Note that this function is hooked into the after_setup_theme hook, which
+	 * runs before the init hook. The init hook is too late for some features, such
+	 * as indicating support for post thumbnails.
+	 */
+	function twentynineteen_setup() {
+		/*
+		 * Make theme available for translation.
+		 * Translations can be filed in the /languages/ directory.
+		 * If you're building a theme based on Twenty Nineteen, use a find and replace
+		 * to change 'twentynineteen' to the name of your theme in all the template files.
+		 */
+		load_theme_textdomain( 'twentynineteen', get_template_directory() . '/languages' );
+
+		// Add default posts and comments RSS feed links to head.
+		add_theme_support( 'automatic-feed-links' );
+
+		/*
+		 * Let WordPress manage the document title.
+		 * By adding theme support, we declare that this theme does not use a
+		 * hard-coded <title> tag in the document head, and expect WordPress to
+		 * provide it for us.
+		 */
+		add_theme_support( 'title-tag' );
+
+		/*
+		 * Enable support for Post Thumbnails on posts and pages.
+		 *
+		 * @link https://developer.wordpress.org/themes/functionality/featured-images-post-thumbnails/
+		 */
+		add_theme_support( 'post-thumbnails' );
+		set_post_thumbnail_size( 1568, 9999 );
+
+		// This theme uses wp_nav_menu() in two locations.
+		register_nav_menus(
+			array(
+				'menu-1' => __( 'Primary', 'twentynineteen' ),
+				'footer' => __( 'Footer Menu', 'twentynineteen' ),
+				'social' => __( 'Social Links Menu', 'twentynineteen' ),
+			)
+		);
+
+		/*
+		 * Switch default core markup for search form, comment form, and comments
+		 * to output valid HTML5.
+		 */
+		add_theme_support(
+			'html5',
+			array(
+				'search-form',
+				'comment-form',
+				'comment-list',
+				'gallery',
+				'caption',
+			)
+		);
+
+		/**
+		 * Add support for core custom logo.
+		 *
+		 * @link https://codex.wordpress.org/Theme_Logo
+		 */
+		add_theme_support(
+			'custom-logo',
+			array(
+				'height'      => 190,
+				'width'       => 190,
+				'flex-width'  => false,
+				'flex-height' => false,
+			)
+		);
+
+		// Add theme support for selective refresh for widgets.
+		add_theme_support( 'customize-selective-refresh-widgets' );
+
+		// Add support for Block Styles.
+		add_theme_support( 'wp-block-styles' );
+
+		// Add support for full and wide align images.
+		add_theme_support( 'align-wide' );
+
+		// Add support for editor styles.
+		add_theme_support( 'editor-styles' );
+
+		// Enqueue editor styles.
+		add_editor_style( 'style-editor.css' );
+
+		// Add custom editor font sizes.
+		add_theme_support(
+			'editor-font-sizes',
+			array(
+				array(
+					'name'      => __( 'Small', 'twentynineteen' ),
+					'shortName' => __( 'S', 'twentynineteen' ),
+					'size'      => 19.5,
+					'slug'      => 'small',
+				),
+				array(
+					'name'      => __( 'Normal', 'twentynineteen' ),
+					'shortName' => __( 'M', 'twentynineteen' ),
+					'size'      => 22,
+					'slug'      => 'normal',
+				),
+				array(
+					'name'      => __( 'Large', 'twentynineteen' ),
+					'shortName' => __( 'L', 'twentynineteen' ),
+					'size'      => 36.5,
+					'slug'      => 'large',
+				),
+				array(
+					'name'      => __( 'Huge', 'twentynineteen' ),
+					'shortName' => __( 'XL', 'twentynineteen' ),
+					'size'      => 49.5,
+					'slug'      => 'huge',
+				),
+			)
+		);
+
+		// Editor color palette.
+		add_theme_support(
+			'editor-color-palette',
+			array(
+				array(
+					'name'  => __( 'Primary', 'twentynineteen' ),
+					'slug'  => 'primary',
+					'color' => twentynineteen_hsl_hex( 'default' === get_theme_mod( 'primary_color' ) ? 199 : get_theme_mod( 'primary_color_hue', 199 ), 100, 33 ),
+				),
+				array(
+					'name'  => __( 'Secondary', 'twentynineteen' ),
+					'slug'  => 'secondary',
+					'color' => twentynineteen_hsl_hex( 'default' === get_theme_mod( 'primary_color' ) ? 199 : get_theme_mod( 'primary_color_hue', 199 ), 100, 23 ),
+				),
+				array(
+					'name'  => __( 'Dark Gray', 'twentynineteen' ),
+					'slug'  => 'dark-gray',
+					'color' => '#111',
+				),
+				array(
+					'name'  => __( 'Light Gray', 'twentynineteen' ),
+					'slug'  => 'light-gray',
+					'color' => '#767676',
+				),
+				array(
+					'name'  => __( 'White', 'twentynineteen' ),
+					'slug'  => 'white',
+					'color' => '#FFF',
+				),
+			)
+		);
+
+		// Add support for responsive embedded content.
+		add_theme_support( 'responsive-embeds' );
+	}
+endif;
+add_action( 'after_setup_theme', 'twentynineteen_setup' );
+
+/**
+ * Register widget area.
+ *
+ * @link https://developer.wordpress.org/themes/functionality/sidebars/#registering-a-sidebar
+ */
+function twentynineteen_widgets_init() {
+
+	register_sidebar(
+		array(
+			'name'          => __( 'Footer', 'twentynineteen' ),
+			'id'            => 'sidebar-1',
+			'description'   => __( 'Add widgets here to appear in your footer.', 'twentynineteen' ),
+			'before_widget' => '<section id="%1$s" class="widget %2$s">',
+			'after_widget'  => '</section>',
+			'before_title'  => '<h2 class="widget-title">',
+			'after_title'   => '</h2>',
+		)
+	);
+
+}
+add_action( 'widgets_init', 'twentynineteen_widgets_init' );
+
+/**
+ * Set the content width in pixels, based on the theme's design and stylesheet.
+ *
+ * Priority 0 to make it available to lower priority callbacks.
+ *
+ * @global int $content_width Content width.
+ */
+function twentynineteen_content_width() {
+	// This variable is intended to be overruled from themes.
+	// Open WPCS issue: {@link https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards/issues/1043}.
+	// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
+	$GLOBALS['content_width'] = apply_filters( 'twentynineteen_content_width', 640 );
+}
+add_action( 'after_setup_theme', 'twentynineteen_content_width', 0 );
+
+/**
+ * Enqueue scripts and styles.
+ */
+function twentynineteen_scripts() {
+	wp_enqueue_style( 'twentynineteen-style', get_stylesheet_uri(), array(), wp_get_theme()->get( 'Version' ) );
+
+	wp_style_add_data( 'twentynineteen-style', 'rtl', 'replace' );
+
+	if ( has_nav_menu( 'menu-1' ) ) {
+		wp_enqueue_script( 'twentynineteen-priority-menu', get_theme_file_uri( '/js/priority-menu.js' ), array(), '1.1', true );
+		wp_enqueue_script( 'twentynineteen-touch-navigation', get_theme_file_uri( '/js/touch-keyboard-navigation.js' ), array(), '1.1', true );
+	}
+
+	wp_enqueue_style( 'twentynineteen-print-style', get_template_directory_uri() . '/print.css', array(), wp_get_theme()->get( 'Version' ), 'print' );
+
+	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
+		wp_enqueue_script( 'comment-reply' );
+	}
+}
+add_action( 'wp_enqueue_scripts', 'twentynineteen_scripts' );
+
+/**
+ * Fix skip link focus in IE11.
+ *
+ * This does not enqueue the script because it is tiny and because it is only for IE11,
+ * thus it does not warrant having an entire dedicated blocking script being loaded.
+ *
+ * @link https://git.io/vWdr2
+ */
+function twentynineteen_skip_link_focus_fix() {
+	// The following is minified via `terser --compress --mangle -- js/skip-link-focus-fix.js`.
+	?>
+	<script>
+	/(trident|msie)/i.test(navigator.userAgent)&&document.getElementById&&window.addEventListener&&window.addEventListener("hashchange",function(){var t,e=location.hash.substring(1);/^[A-z0-9_-]+$/.test(e)&&(t=document.getElementById(e))&&(/^(?:a|select|input|button|textarea)$/i.test(t.tagName)||(t.tabIndex=-1),t.focus())},!1);
+	</script>
+	<?php
+}
+add_action( 'wp_print_footer_scripts', 'twentynineteen_skip_link_focus_fix' );
+
+/**
+ * Enqueue supplemental block editor styles.
+ */
+function twentynineteen_editor_customizer_styles() {
+
+	wp_enqueue_style( 'twentynineteen-editor-customizer-styles', get_theme_file_uri( '/style-editor-customizer.css' ), false, '1.1', 'all' );
+
+	if ( 'custom' === get_theme_mod( 'primary_color' ) ) {
+		// Include color patterns.
+		require_once get_parent_theme_file_path( '/inc/color-patterns.php' );
+		wp_add_inline_style( 'twentynineteen-editor-customizer-styles', twentynineteen_custom_colors_css() );
+	}
+}
+add_action( 'enqueue_block_editor_assets', 'twentynineteen_editor_customizer_styles' );
+
+/**
+ * Display custom color CSS in customizer and on frontend.
+ */
+function twentynineteen_colors_css_wrap() {
+
+	// Only include custom colors in customizer or frontend.
+	if ( ( ! is_customize_preview() && 'default' === get_theme_mod( 'primary_color', 'default' ) ) || is_admin() ) {
+		return;
+	}
+
+	require_once get_parent_theme_file_path( '/inc/color-patterns.php' );
+
+	$primary_color = 199;
+	if ( 'default' !== get_theme_mod( 'primary_color', 'default' ) ) {
+		$primary_color = get_theme_mod( 'primary_color_hue', 199 );
+	}
+	?>
+
+	<style type="text/css" id="custom-theme-colors" <?php echo is_customize_preview() ? 'data-hue="' . absint( $primary_color ) . '"' : ''; ?>>
+		<?php echo twentynineteen_custom_colors_css(); ?>
+	</style>
+	<?php
+}
+add_action( 'wp_head', 'twentynineteen_colors_css_wrap' );
+
+/**
+ * SVG Icons class.
+ */
+require get_template_directory() . '/classes/class-twentynineteen-svg-icons.php';
+
+/**
+ * Custom Comment Walker template.
+ */
+require get_template_directory() . '/classes/class-twentynineteen-walker-comment.php';
+
+/**
+ * Enhance the theme by hooking into WordPress.
+ */
+require get_template_directory() . '/inc/template-functions.php';
+
+/**
+ * SVG Icons related functions.
+ */
+require get_template_directory() . '/inc/icon-functions.php';
+
+/**
+ * Custom template tags for the theme.
+ */
+require get_template_directory() . '/inc/template-tags.php';
+
+/**
+ * Customizer additions.
+ */
+require get_template_directory() . '/inc/customizer.php';
+
+/* Custom Code */
+
+add_action( 'init', 'codex_book_init' );
+/**
+ * Register a book post type.
+ *
+ */
+function codex_book_init() {
+	$labels = array(
+		'name'               => _x( 'Books', 'post type general name', 'your-plugin-textdomain' ),
+		'singular_name'      => _x( 'Book', 'post type singular name', 'your-plugin-textdomain' ),
+		'menu_name'          => _x( 'Books', 'admin menu', 'your-plugin-textdomain' ),
+		'name_admin_bar'     => _x( 'Book', 'add new on admin bar', 'your-plugin-textdomain' ),
+		'add_new'            => _x( 'Add New', 'book', 'your-plugin-textdomain' ),
+		'add_new_item'       => __( 'Add New Book', 'your-plugin-textdomain' ),
+		'new_item'           => __( 'New Book', 'your-plugin-textdomain' ),
+		'edit_item'          => __( 'Edit Book', 'your-plugin-textdomain' ),
+		'view_item'          => __( 'View Book', 'your-plugin-textdomain' ),
+		'all_items'          => __( 'All Books', 'your-plugin-textdomain' ),
+		'search_items'       => __( 'Search Books', 'your-plugin-textdomain' ),
+		'parent_item_colon'  => __( 'Parent Books:', 'your-plugin-textdomain' ),
+		'not_found'          => __( 'No books found.', 'your-plugin-textdomain' ),
+		'not_found_in_trash' => __( 'No books found in Trash.', 'your-plugin-textdomain' )
+	);
+
+	$args = array(
+		'labels'             => $labels,
+		'description'        => __( 'Description.', 'your-plugin-textdomain' ),
+		'public'             => true,
+		'publicly_queryable' => true,
+		'show_ui'            => true,
+		'show_in_menu'       => true,
+		'query_var'          => true,
+		'rewrite'            => array( 'slug' => 'book' ),
+		'capability_type'    => 'post',
+		'has_archive'        => true,
+		'hierarchical'       => false,
+		'menu_position'      => null,
+		'supports'           => array( 'title', 'editor', 'author', 'thumbnail', 'excerpt', 'comments' )
+	);
+
+	register_post_type( 'book', $args );
+}
+
+
+
+// hook into the init action and call create_book_taxonomies when it fires
+add_action( 'init', 'create_book_taxonomies', 0 );
+
+// create two taxonomies, genres and writers for the post type "book"
+function create_book_taxonomies() {
+	// Add new taxonomy, make it hierarchical (like categories)
+	$labels = array(
+		'name'              => _x( 'Books', 'taxonomy general name', 'textdomain' ),
+		'singular_name'     => _x( 'Book', 'taxonomy singular name', 'textdomain' ),
+		'search_items'      => __( 'Search Books', 'textdomain' ),
+		'all_items'         => __( 'All Books', 'textdomain' ),
+		'parent_item'       => __( 'Parent Book', 'textdomain' ),
+		'parent_item_colon' => __( 'Parent Book:', 'textdomain' ),
+		'edit_item'         => __( 'Edit Book', 'textdomain' ),
+		'update_item'       => __( 'Update Book', 'textdomain' ),
+		'add_new_item'      => __( 'Add New Book', 'textdomain' ),
+		'new_item_name'     => __( 'New Book Name', 'textdomain' ),
+		'menu_name'         => __( 'Books Categories', 'textdomain' ),
+	);
+
+	$args = array(
+		'hierarchical'      => true,
+		'labels'            => $labels,
+		'show_ui'           => true,
+		'show_admin_column' => true,
+		'query_var'         => true,
+		'rewrite'           => array( 'slug' => 'book' ),
+	);
+
+	register_taxonomy( 'book-cat', array( 'book' ), $args );
+
+	// Add new taxonomy, NOT hierarchical (like tags)
+	/*$labels = array(
+		'name'                       => _x( 'Writers', 'taxonomy general name', 'textdomain' ),
+		'singular_name'              => _x( 'Writer', 'taxonomy singular name', 'textdomain' ),
+		'search_items'               => __( 'Search Writers', 'textdomain' ),
+		'popular_items'              => __( 'Popular Writers', 'textdomain' ),
+		'all_items'                  => __( 'All Writers', 'textdomain' ),
+		'parent_item'                => null,
+		'parent_item_colon'          => null,
+		'edit_item'                  => __( 'Edit Writer', 'textdomain' ),
+		'update_item'                => __( 'Update Writer', 'textdomain' ),
+		'add_new_item'               => __( 'Add New Writer', 'textdomain' ),
+		'new_item_name'              => __( 'New Writer Name', 'textdomain' ),
+		'separate_items_with_commas' => __( 'Separate writers with commas', 'textdomain' ),
+		'add_or_remove_items'        => __( 'Add or remove writers', 'textdomain' ),
+		'choose_from_most_used'      => __( 'Choose from the most used writers', 'textdomain' ),
+		'not_found'                  => __( 'No writers found.', 'textdomain' ),
+		'menu_name'                  => __( 'Writers', 'textdomain' ),
+	);
+
+	$args = array(
+		'hierarchical'          => false,
+		'labels'                => $labels,
+		'show_ui'               => true,
+		'show_admin_column'     => true,
+		'update_count_callback' => '_update_post_term_count',
+		'query_var'             => true,
+		'rewrite'               => array( 'slug' => 'writer' ),
+	);
+
+	register_taxonomy( 'writer', 'book', $args );*/
+}
+
+add_shortcode('book_list', 'add_book_list');
+function add_book_list(){
+	global $post, $paged;
+	?>
+	<article class="">
+		<?php
+
+			$argmnt = array(
+				'posts_per_page'   => 4,
+				'orderby'          => 'date',
+				'post_type'        => 'book',
+				'post_status'      => 'publish',
+				'order'			   => 'DESC',
+				'paged'            => $paged,
+				'prev_next'          => True
+			);
+			
+			
+			query_posts( $argmnt ); ?>
+		
+			<div class="all-category">
+				<div class="category-txt">
+				
+					<?php if ( have_posts() ) while ( have_posts() ) : the_post(); ?>
+							
+								<div class="one-first">
+								<?php 
+										/*echo '<pre>';
+										print_r($terms);*/
+										$terms = get_the_terms( $post->ID , 'book-cat' );
+										foreach ( $terms as $term ) {
+											
+										$category_link = get_category_link ($term->term_id);
+										
+										echo '<a href="'. $category_link .'">'. $term->name .'</a>';
+									}
+								?>
+									<a href="<?php echo get_the_permalink(); ?>"><?php the_post_thumbnail(); ?></a>
+									<p><a href="<?php echo get_the_permalink(); ?>"><?php echo get_the_title();?></a></p>
+									<p><?php echo get_the_content(); ?></p>
+									
+								</div>
+							
+					<?php endwhile; ?>
+				</div>
+				
+			</div>
+			<div class="cate-pagination"><?php echo paginate_links($argmnt); ?> </div>
+			
+	</article>
+		  
+		<?php wp_reset_postdata();
+	wp_reset_query();
+		?>
+	<?php
+}
+add_shortcode('cat_list_drop', 'add_category_list');
+function add_category_list() {
+	$active_category = get_queried_object();
+	$categories = get_categories( array( 
+			'taxonomy'   => 'book-cat',
+			'exclude' => array(1) ) );  
+    ?>
+		<div class="header-category-dropdown">
+			<select onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);"><?php 
+			echo '<option value="' . get_option('home') . '/book-list/">All Book categories</option>';?>
+				<?php
+					foreach ($categories as $category):
+						echo '<option '. (($active_category->term_id == $category->cat_ID || $active_category->parent == $category->cat_ID) ? 'selected' : '') .' value="'. get_category_link($category->term_id) .'">'. $category->cat_name .'</option>';
+					endforeach;
+				?>
+			</select>
+		</div>
+	<?php
+}
+//phpinfo();
+?>
+
+
+add_action( 'woocommerce_after_shop_loop_item_title', 'hide_loop_product_prices', 1 );
+function hide_loop_product_prices(){
+    global $product;
+
+    if( is_product_category('morilee') ):
+
+    // Hide prices
+    remove_action('woocommerce_after_shop_loop_item_title', 'woocommerce_template_loop_price', 10 );
+    // Hide add-to-cart button
+    remove_action('woocommerce_after_shop_loop_item','woocommerce_template_loop_add_to_cart', 30 );
+
+    endif;
+}
+
+// Single product pages
+add_action( 'woocommerce_single_product_summary', 'hide_single_product_prices', 1 );
+function hide_single_product_prices(){
+    global $product;
+
+    if( has_term( 'morilee', 'product_cat', $product->get_id() ) ):
+
+    // Hide prices
+    remove_action('woocommerce_single_product_summary', 'woocommerce_template_single_price', 10 );
+
+    // Hide add-to-cart button, quantity buttons (and attributes dorpdowns for variable products)
+    if( ! $product->is_type('variable') ){
+        remove_action('woocommerce_single_product_summary','woocommerce_template_single_add_to_cart', 30 );
+    } else {
+        remove_action( 'woocommerce_single_variation', 'woocommerce_single_variation_add_to_cart_button', 20 );
+    }
+
+    endif;
+}
+
+
+/* Facebook feed display */
+	<?php
+/**
+ * Agency Pro.
+ *
+ * This file adds the functions to the Agency Pro Theme.
+ *
+ * @package Agency
+ * @author  StudioPress
+ * @license GPL-2.0+
+ * @link    https://my.studiopress.com/themes/agency/
+ */
+
+// Start the engine.
+include_once( get_template_directory() . '/lib/init.php' );
+
+// Setup Theme.
+include_once( get_stylesheet_directory() . '/lib/theme-defaults.php' );
+
+add_action( 'after_setup_theme', 'agency_localization_setup' );
+/**
+ * Sets localization (do not remove).
+ *
+ * @since 1.0.0
+ */
+function agency_localization_setup() {
+	load_child_theme_textdomain( 'agency-pro', get_stylesheet_directory() . '/languages' );
+}
+
+// Add Settings to WordPress Theme Customizer.
+require_once( get_stylesheet_directory() . '/lib/customize.php' );
+
+// Child theme (do not remove).
+define( 'CHILD_THEME_NAME', __( 'Agency Pro', 'agency-pro' ) );
+define( 'CHILD_THEME_URL', 'https://my.studiopress.com/themes/agency/' );
+define( 'CHILD_THEME_VERSION', '3.1.5' );
+
+// Add HTML5 markup structure.
+add_theme_support( 'html5', array( 'search-form', 'comment-form', 'comment-list', 'gallery', 'caption' ) );
+
+// Add viewport meta tag for mobile browsers.
+add_theme_support( 'genesis-responsive-viewport' );
+
+// Enqueue Scripts.
+add_action( 'wp_enqueue_scripts', 'agency_load_scripts' );
+function agency_load_scripts() {
+
+    wp_enqueue_script( 'agency-responsive-menu', get_stylesheet_directory_uri() . '/js/responsive-menu.js', array( 'jquery' ), '1.0.0' );
+    
+    wp_enqueue_style('opensans-styles', 'https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i&display=swap', array(), '0', false);
+
+	wp_enqueue_style( 'dashicons' );
+
+	wp_enqueue_style( 'google-fonts', '//fonts.googleapis.com/css?family=EB+Garamond|Spinnaker', array(), CHILD_THEME_VERSION );
+
+}
+
+// Enqueue Backstretch script and prepare images for loading.
+add_action( 'wp_enqueue_scripts', 'agency_enqueue_backstretch_scripts' );
+function agency_enqueue_backstretch_scripts() {
+
+	$image = get_option( 'agency-backstretch-image', sprintf( '%s/images/bg.jpg', get_stylesheet_directory_uri() ) );
+
+	// Load scripts only if custom backstretch image is being used.
+	if ( ! empty( $image ) ) {
+
+		wp_enqueue_script( 'agency-pro-backstretch', get_stylesheet_directory_uri() . '/js/backstretch.js', array( 'jquery' ), '1.0.0' );
+		wp_enqueue_script( 'agency-pro-backstretch-set', get_stylesheet_directory_uri() . '/js/backstretch-set.js' , array( 'jquery', 'agency-pro-backstretch' ), '1.0.0' );
+
+		wp_localize_script( 'agency-pro-backstretch-set', 'BackStretchImg', array( 'src' => str_replace( 'http:', '', $image ) ) );
+
+	}
+
+}
+
+// Add new image sizes.
+add_image_size( 'home-bottom', 380, 150, TRUE );
+add_image_size( 'home-middle', 380, 380, TRUE );
+
+// Add support for custom background.
+add_theme_support( 'custom-background' );
+
+// Add support for custom header.
+add_theme_support( 'custom-header', array(
+	'header_image'    => '',
+	'header-selector' => '.site-title a',
+	'header-text'     => false,
+	'height'          => 60,
+	'width'           => 300,
+) );
+
+// Add support for additional color style options.
+add_theme_support( 'genesis-style-selector', array(
+	'agency-pro-blue'   => __( 'Agency Pro Blue', 'agency-pro' ),
+	'agency-pro-green'  => __( 'Agency Pro Green', 'agency-pro' ),
+	'agency-pro-orange' => __( 'Agency Pro Orange', 'agency-pro' ),
+	'agency-pro-red'    => __( 'Agency Pro Red', 'agency-pro' ),
+) );
+
+// Add support for 3-column footer widgets.
+add_theme_support( 'genesis-footer-widgets', 3 );
+
+// Add support for after entry widget.
+add_theme_support( 'genesis-after-entry-widget-area' );
+
+// Reposition the header
+remove_action( 'genesis_header', 'genesis_header_markup_open', 5 );
+remove_action( 'genesis_header', 'genesis_do_header' );
+remove_action( 'genesis_header', 'genesis_header_markup_close', 15 );
+add_action( 'genesis_before', 'genesis_header_markup_open', 5 );
+add_action( 'genesis_before', 'genesis_do_header', 10 );
+add_action( 'genesis_before', 'genesis_header_markup_close', 15 );
+
+// Remove the site description.
+remove_action( 'genesis_site_description', 'genesis_seo_site_description' );
+
+// Rename Menus based on location.
+add_theme_support( 'genesis-menus', array( 'primary' => __( 'After Header Menu', 'agency-pro' ), 'secondary' => __( 'Footer Menu', 'agency-pro' ) ) );
+
+// Reposition the secondary navigation menu.
+remove_action( 'genesis_after_header', 'genesis_do_subnav' );
+add_action( 'genesis_footer', 'genesis_do_subnav', 7 );
+
+// Reduce the secondary navigation menu to one level depth.
+add_filter( 'wp_nav_menu_args', 'agency_secondary_menu_args' );
+function agency_secondary_menu_args( $args ) {
+
+	if ( 'secondary' === $args['theme_location'] ) {
+		$args['depth'] = 1;
+	}
+
+	return $args;
+
+}
+
+// Relocate after entry widget.
+remove_action( 'genesis_after_entry', 'genesis_after_entry_widget_area' );
+add_action( 'genesis_after_entry', 'genesis_after_entry_widget_area', 5 );
+
+// Register widget areas.
+genesis_register_sidebar( array(
+	'id'          => 'home-top',
+	'name'        => __( 'Home Top', 'agency-pro' ),
+	'description' => __( 'This is the top section of the homepage.', 'agency-pro' ),
+) );
+genesis_register_sidebar( array(
+	'id'          => 'home-middle',
+	'name'        => __( 'Home Middle', 'agency-pro' ),
+	'description' => __( 'This is the middle section of the homepage.', 'agency-pro' ),
+) );
+genesis_register_sidebar( array(
+	'id'          => 'home-bottom',
+	'name'        => __( 'Home Bottom', 'agency-pro' ),
+	'description' => __( 'This is the bottom section of the homepage.', 'agency-pro' ),
+) );
+
+add_action('wp_head','add_font_awosome');
+function add_font_awosome(){?>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<?php }
+
+
+add_action('genesis_before_header','top_header_data');
+function top_header_data(){?>
+    <header class="site-header" itemscope="" itemtype="https://schema.org/WPHeader"><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <div class="wrap">
+            <div class="social-icon">
+                <span><a href="https://www.facebook.com/welbiltcustombuilthomes" target="_blank"><i class="fa fa-facebook-f"></i></a></span>
+                <span><a href="https://twitter.com/WelbiltHomes" target="_blank"><i class="fa fa-twitter"></i></a></span>
+                <span><a href="https://plus.google.com/110908855641021858881" target="_blank"><i class="fa fa-google-plus"></i></a></span>
+                <span><a href="https://www.linkedin.com/in/welbilt-homes-inc-4b8894126/" target="_blank"><i class="fa fa-linkedin"></i></a></span>
+                <span><a href="https://www.pinterest.com/welbilt/" target="_blank"><i class="fa fa-pinterest-p"></i></a></span>
+                <span><a href="https://welbilthomesinc.tumblr.com/" target="_blank"><i class="fa fa-tumblr"></i></a></span>
+                <span><a href="https://www.instagram.com/welbilthomes/" target="_blank"><i class="fa fa-instagram"></i></a></span>
+                <span><a href="https://www.youtube.com/user/WelbiltHomes" target="_blank"><i class="fa fa-youtube"></i></a></span>
+                <span><a href="https://www.houzz.com/pro/wbhinc/welbilt-homes-inc" target="_blank"><i class="fa fa-houzz"></i></a></span>
+            </div>
+            <div class="contact-number"><span><i class="fa fa-phone"></i> 610-916-2020</span></div>
+        </div>
+    </header>
+<?php }
+
+add_action('genesis_footer_data','genesis_footer_data');
+function genesis_footer_data(){?>
+    <footer class="site-footer" itemscope="" itemtype="https://schema.org/WPHeader">
+        <div class="wrap">
+            <div class="footer-copyright">
+                <span>&copy;&nbsp;Copyright 2018 Welbilt Homes Inc. All Rights Reserved </span>
+            </div>
+            <div class="design-by"><span><a href="http://www.contractormarketing911.com/" target="_blank">Contractor Websites</a> by PageOne Design & Marketing LLC</span></div>
+        </div>
+    </footer>
+<?php }
+
+add_action('after_top_header','after_top_header');
+function after_top_header(){?>
+    <nav class="nav-primary" aria-label="Main" itemscope="" itemtype="https://schema.org/SiteNavigationElement">
+        <div class="wrap">
+            <div class="site-logo"><a href="<?php echo site_url();?>"><img src="http://www.welbilthomes.net/wp-content/uploads/2018/06/custom-built-01-e1529505569579-1.png"/></a></div>
+            <?php 
+                wp_nav_menu(array(
+                    'theme_location'  => 'primary',
+                    'container'       => 'ul',
+                    'menu_class'      => 'menu genesis-nav-menu',
+                ));               
+                ?>
+        </div>
+    </nav>
+<?php }
+
+add_shortcode('display_latest_built_home','display_latest_built_home');
+function display_latest_built_home(){
+    $args = array(
+        'posts_per_page' => 4,
+	'orderby'          => 'date',
+	'order'            => 'ASC',
+	'post_type'        => 'homes',
+	'post_status'      => 'publish', 
+    );
+    $the_query = new WP_Query( $args );
+    if ( $the_query->have_posts() ) { 
+        ob_start();
+	echo '<div class="frq-built-homes">';
+	while ( $the_query->have_posts() ) {
+            $the_query->the_post();
+            $URL = get_field( "homeplan_url", $post->id );
+            $featured_img_url = get_the_post_thumbnail_url(get_the_ID(),'full');
+            echo '<div class="single-home-item">';
+                echo '<figure class="overlay overlay4">';
+                    echo '<img src="'.$featured_img_url.'" alt="">';
+                echo '</figure>';
+                echo '<div class="home-title">';
+                    echo '<h4>'.get_the_title().'</h4>';                       
+                echo '</div>';
+                echo '<div class="home-content">';
+                    echo '<p>'.get_the_content().'</p>';                       
+                echo '</div>';
+                echo '<div class="see-plan-btn">';
+                    echo '<a target="_blank" href="'.$URL.'">see plans</a>';                       
+                echo '</div>';
+                
+            echo '</div>';           
+	}
+	echo '</div>';
+	wp_reset_postdata();
+    }
+}
+/*
+ * @Developed BY : Afzal [AT]
+ * This shotcode is used to display facebook feed.
+ * Use [display_facebook_feed] for display facebook feed
+ */
+add_shortcode('display_facebook_feed','display_facebook_feed');
+function display_facebook_feed(){
+   // $url = 'https://www.juicer.io/api/feeds/welbiltcustombuilthomes-8ad00e7e-1ef8-4b9d-a9f7-4d925e004e50?per=6&filter=welbiltcustombuilthomes';
+    $url = 'https://www.juicer.io/api/feeds/demoglobalia-demoglobalia?per=6&filter=welbiltcustombuilthomes';
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);   
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);   
+    curl_setopt($ch, CURLOPT_URL,$url);
+    $result=curl_exec($ch);    
+    curl_close($ch);
+    $FBdata = json_decode($result, true);
+    $i=0;
+    ob_start();
+    echo '<script src="https://cdnjs.cloudflare.com/ajax/libs/masonry/4.2.1/masonry.pkgd.js"></script>';
+    echo '<div class="facebook-feed-container">';
+    foreach($FBdata['posts']['items'] as $single_feed){  
+        echo '<div class="feed-item">';
+            echo '<div class="feed-item_wrap">';
+                if(array_key_exists('image',$single_feed)){
+                    echo '<figure class="overlay overlay4">';
+                        echo '<img src="'.$single_feed['image'].'" alt=""/>';
+                    echo '</figure>';
+                }
+                echo '<div class="feed-post-date">';
+                    echo '<span>'.date("d", strtotime($single_feed['external_created_at'])).'</span>';
+                    echo '<span>'.date("M", strtotime($single_feed['external_created_at'])).'</span>';    
+                echo '</div>';
+                if(array_key_exists('message',$single_feed)){
+                echo '<div class="feed-content">';
+                    echo $single_feed['message'];                   
+                echo '</div>';
+                }
+                echo '<div class="feed-meta">';
+                    echo '<div class="feed-left">'; 
+                        echo '<span class="feed-likes"><i class="fa fa-thumbs-up"></i>'.$single_feed['likes'].'</span>';
+                        echo '<span class="feed-comments"><i class="fa fa-comment"></i>'.$single_feed['comments'].'</span>';
+                    echo '</div>';
+                    echo '<div class="feed-right">';
+                        echo '<a href="'.$single_feed['full_url'].'" target="_blank">More info</a>';
+                    echo '</div>';
+                echo '</div>';
+            echo '</div>';
+        echo '</div>';
+    }
+    echo '</div>';
+    
+}
+
+/* 
+ * Function use to set dateformate
+ */
+function get_date_formate($date){
+    return $newDate = date("d M", strtotime($date));    
+}
+
+add_action('wp_head','add_js_script');
+function add_js_script(){?>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<?}
+
+function my_wpcf7_form_elements($html) {
+	$text = 'State';
+	$html = str_replace('<option value="">---</option>', '<option value="" disabled selected>' . $text . '</option>', $html);
+	return $html;
+}
+add_filter('wpcf7_form_elements', 'my_wpcf7_form_elements');
+
+
+add_action('wp_footer','add_favrite_widgets');
+function add_favrite_widgets(){
+    if(is_page('home-plans')){
+        echo '<div class="fav-com-box">';
+            echo '<div class="fav-icon"><i class="fa fa-heart"></i></div>';
+            echo '<div class="fav-com-content">';
+                echo do_shortcode('[wpl_widget_instance id="wpl_favorites_widget-2"]');
+            echo '</div>';
+        echo '</div>';
+    }
+}
+add_action('genesis_before_loops','add_slider');
+function add_slider(){
+    echo do_shortcode('[rev_slider alias="blog"]');
+}
+
+
+// pdf mail code use in function.php
+
+add_action("wpcf7_before_send_mail", "wpcf7_do_something");
+
+function wpcf7_do_something($WPCF7_ContactForm)
+{
+
+    if (9352 == $WPCF7_ContactForm->id()) {
+
+        //Get current form
+        $wpcf7      = WPCF7_ContactForm::get_current();
+
+        // get current SUBMISSION instance
+        $submission = WPCF7_Submission::get_instance();
+
+        // Ok go forward
+        if ($submission) {
+
+            // get submission data
+            $data = $submission->get_posted_data();
+
+            // nothing's here... do nothing...
+            if (empty($data))
+                return;
+
+           
+          $name = $data['checkbox-57'];
+
+            // do some replacements in the cf7 email body
+            $mail         = $wpcf7->prop('mail');
+
+
+            // Find/replace the "[your-name]" tag as defined in your CF7 email body
+            // and add changes name
+          
+
+        
+		
+	
+	$pdf_array  = array(
+        	"Ranch-Collection.pdf"=>"Ranch Collection",
+        	"Mission-collection.pdf"=>"Mission Collection",
+        	"2-Story-Collection.pdf"=>"2-Story Collection",
+        	"Bi-level-collection.pdf"=>"Bi-Level Collection",
+        	"Cape-Cod-Collection.pdf"=>"Cape Cod Collection",
+        	"all_collections_list.pdf"=>"Download All Brochures Here");	
+        	
+	    $newdata = '';
+        foreach($name as  $pdf_array_add)
+        {
+          	 $search_data=  array_search($pdf_array_add , $pdf_array);
+          	 
+
+          	 
+          	  $newdata .= 'uploads/2020/01/'.$search_data.' 
+          	  ';
+          	 
+          	   
+        }
+        
+       $mail['attachments'] =  $newdata;
+        $wpcf7->set_properties(array(
+                "mail" => $mail
+            ));
+
+            // return current cf7 instance
+            return $wpcf7;
+
+        }
+		
+		
+    }
+}
+
+
+ jQuery('.next-redirect-btn').click(function() {
+        jQuery(".wpcf7-form").valid();
+    });
+	
+
+
+	
+	jQuery('.allpdf input').on('change', function() {
+
+    jQuery('.ranch input').not(this).prop('checked', false);  
+});
+
+jQuery('.ranch input').on('change', function() {
+    jQuery('.allpdf input').not(this).prop('checked', false);  
+	
+});
+
+use in contact form code
+
+<div class="dwn-frm">
+[checkbox checkbox-57 class:ranch "Ranch Collection"]
+[checkbox checkbox-57 class:ranch "Mission Collection"]
+[checkbox checkbox-57 class:ranch "2-Story Collection"]
+[checkbox checkbox-57 class:ranch "Bi-Level Collection"]
+[checkbox checkbox-57 class:ranch  "Cape Cod Collection"]
+[checkbox checkbox-57 class:allpdf "Download All Brochures Here"]
+
+
+
+[previous]  [submit "Send"]
+[multistep multistep-692 last_step send_email]
+</div>
+
+[text* your-fname placeholder "First Name"]
+[text* your-lname placeholder "Last Name"]
+[email* email2 placeholder "Email"] 
+
+[recaptcha]
+<p style="margin-bottom:20px"> </p>
+
+
+[submit "Next"]
+
+[multistep multistep-72 first_step "https://www.welbilthomes.net/brochure-download/"] redirect for this code use
+
+
+
+// radio button mail and download pdf code
+[contact-form-7 id="9352" title="Download All Brochures Here"]
+<?php
+function wpcf7_do_something($WPCF7_ContactForm){
+
+if (9352 == $WPCF7_ContactForm->id()) {
+//Get current form
+$wpcf7 = WPCF7_ContactForm::get_current();
+// get current SUBMISSION instance
+$submission = WPCF7_Submission::get_instance();
+// Ok go forward
+if ($submission) {
+// get submission data
+$data = $submission->get_posted_data();
+// nothing's here... do nothing...
+if (empty($data))
+return;
+$name= $data['checkbox-57'];
+// do some replacements in the cf7 email body
+$mail= $wpcf7->prop('mail');
+// Find/replace the "[your-name]" tag as defined in your CF7 email body
+// and add changes name
+$select_name = $name[0] ;
+
+if($select_name == 'Ranch Collection'){
+$mail['attachments'] = 'uploads/2019/12/Ranch-Collection.pdf';
+}
+elseif($select_name == 'Mission Collection'){
+$mail['attachments'] = 'uploads/2019/12/Mission-collection.pdf';
+}
+elseif($select_name == '2-Story Collection'){
+$mail['attachments'] = 'uploads/2019/12/2-Story-Collection_compressed.pdf';
+}
+elseif($select_name == 'Bi-Level Collection'){
+$mail['attachments'] = 'uploads/2019/12/Bi-level-collection.pdf';
+}
+elseif($select_name == 'Cape Cod Collection'){
+$mail['attachments'] = 'uploads/2019/12/Cape-Cod-Collection.pdf';
+}
+else{
+$mail['attachments'] = 'uploads/2019/12/all_collections_list.pdf';
+}
+// Save the email body
+$wpcf7->set_properties(array(
+"mail" => $mail
+));
+// return current cf7 instance
+return $wpcf7;
+}
+}
+}
+
+//end mail pdf
+
+
+// Country wise phone number display
+<?php
+/**
+ * callcabinet functions and definitions
+ *
+ * @link https://developer.wordpress.org/themes/basics/theme-functions/
+ *
+ * @package callcabinet
+ */
+
+if ( ! function_exists( 'callcabinet_setup' ) ) :
+	/**
+	 * Sets up theme defaults and registers support for various WordPress features.
+	 *
+	 * Note that this function is hooked into the after_setup_theme hook, which
+	 * runs before the init hook. The init hook is too late for some features, such
+	 * as indicating support for post thumbnails.
+	 */
+	function callcabinet_setup() {
+		/*
+		 * Make theme available for translation.
+		 * Translations can be filed in the /languages/ directory.
+		 * If you're building a theme based on callcabinet, use a find and replace
+		 * to change 'callcabinet' to the name of your theme in all the template files.
+		 */
+		load_theme_textdomain( 'callcabinet', get_template_directory() . '/languages' );
+
+		// Add default posts and comments RSS feed links to head.
+		add_theme_support( 'automatic-feed-links' );
+
+		/*
+		 * Let WordPress manage the document title.
+		 * By adding theme support, we declare that this theme does not use a
+		 * hard-coded <title> tag in the document head, and expect WordPress to
+		 * provide it for us.
+		 */
+		add_theme_support( 'title-tag' );
+
+		/*
+		 * Enable support for Post Thumbnails on posts and pages.
+		 *
+		 * @link https://developer.wordpress.org/themes/functionality/featured-images-post-thumbnails/
+		 */
+		add_theme_support( 'post-thumbnails' );
+
+		// This theme uses wp_nav_menu() in one location.
+		register_nav_menus( array(
+			'menu-1' => esc_html__( 'Primary', 'callcabinet' ),
+		) );
+
+		/*
+		 * Switch default core markup for search form, comment form, and comments
+		 * to output valid HTML5.
+		 */
+		add_theme_support( 'html5', array(
+			'search-form',
+			'comment-form',
+			'comment-list',
+			'gallery',
+			'caption',
+		) );
+
+		// Set up the WordPress core custom background feature.
+		add_theme_support( 'custom-background', apply_filters( 'callcabinet_custom_background_args', array(
+			'default-color' => 'ffffff',
+			'default-image' => '',
+		) ) );
+
+		// Add theme support for selective refresh for widgets.
+		add_theme_support( 'customize-selective-refresh-widgets' );
+
+		/**
+		 * Add support for core custom logo.
+		 *
+		 * @link https://codex.wordpress.org/Theme_Logo
+		 */
+		add_theme_support( 'custom-logo', array(
+			'height'      => 250,
+			'width'       => 250,
+			'flex-width'  => true,
+			'flex-height' => true,
+		) );
+	}
+endif;
+add_action( 'after_setup_theme', 'callcabinet_setup' );
+
+/**
+ * Set the content width in pixels, based on the theme's design and stylesheet.
+ *
+ * Priority 0 to make it available to lower priority callbacks.
+ *
+ * @global int $content_width
+ */
+function callcabinet_content_width() {
+	// This variable is intended to be overruled from themes.
+	// Open WPCS issue: {@link https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards/issues/1043}.
+	// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
+	$GLOBALS['content_width'] = apply_filters( 'callcabinet_content_width', 640 );
+}
+add_action( 'after_setup_theme', 'callcabinet_content_width', 0 );
+
+/**
+ * Register widget area.
+ *
+ * @link https://developer.wordpress.org/themes/functionality/sidebars/#registering-a-sidebar
+ */
+function callcabinet_widgets_init() {
+	register_sidebar( array(
+		'name'          => esc_html__( 'Sidebar', 'callcabinet' ),
+		'id'            => 'sidebar-1',
+		'description'   => esc_html__( 'Add widgets here.', 'callcabinet' ),
+		'before_widget' => '<section id="%1$s" class="widget %2$s">',
+		'after_widget'  => '</section>',
+		'before_title'  => '<h2 class="widget-title">',
+		'after_title'   => '</h2>',
+	) );
+}
+add_action( 'widgets_init', 'callcabinet_widgets_init' );
+
+/**
+ * Enqueue scripts and styles.
+ */
+function callcabinet_scripts() {
+
+	//wp_enqueue_style('old-stylesheet', get_stylesheet_directory_uri() . '/css/old.css');
+	wp_enqueue_style( 'callcabinet-style', get_stylesheet_uri() );
+
+	wp_enqueue_script( 'callcabinet-navigation', get_template_directory_uri() . '/js/navigation.js', array(), '20151215', true );
+
+	wp_enqueue_script( 'callcabinet-skip-link-focus-fix', get_template_directory_uri() . '/js/skip-link-focus-fix.js', array(), '20151215', true );
+
+	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
+		wp_enqueue_script( 'comment-reply' );
+	}
+}
+add_action( 'wp_enqueue_scripts', 'callcabinet_scripts');
+
+/**
+ * Implement the Custom Header feature.
+ */
+require get_template_directory() . '/inc/custom-header.php';
+
+/**
+ * Custom template tags for this theme.
+ */
+require get_template_directory() . '/inc/template-tags.php';
+
+/**
+ * Functions which enhance the theme by hooking into WordPress.
+ */
+require get_template_directory() . '/inc/template-functions.php';
+
+/**
+ * Customizer additions.
+ */
+require get_template_directory() . '/inc/customizer.php';
+
+/**
+ * Load Jetpack compatibility file.
+ */
+if ( defined( 'JETPACK__VERSION' ) ) {
+	require get_template_directory() . '/inc/jetpack.php';
+}
+
+require_once('includes/autoLoader.php');
+
+function print_old_styles(){
+	if(get_field('new_theme_enabled') != ''){
+		remove_action('wp_head', 'wp_custom_css_cb', 101);
+	} else {
+		wp_enqueue_style('old-fonts', get_stylesheet_directory_uri() . '/old-fonts.css');
+	}
+}
+add_action('wp_head', 'print_old_styles');
+
+//add_action( 'wp_enqueue_scripts', 'enqueue_load_fa' );
+function enqueue_load_fa() {
+        wp_enqueue_style( 'load-fa', 'https://use.fontawesome.com/releases/v5.8.1/css/all.css' );
+        
+}
+
+// display phoneby countryCode 
+function getLocationInfoByIp(){
+    $client  = @$_SERVER['HTTP_CLIENT_IP'];
+    $forward = @$_SERVER['HTTP_X_FORWARDED_FOR'];
+    $remote  = @$_SERVER['REMOTE_ADDR'];
+    $result  = array('country'=>'');
+    if(filter_var($client, FILTER_VALIDATE_IP)){
+        $ip = $client;
+    }elseif(filter_var($forward, FILTER_VALIDATE_IP)){
+        $ip = $forward;
+    }else{
+        $ip = $remote;
+    }
+    $ip_data = @json_decode(file_get_contents("http://www.geoplugin.net/json.gp?ip=".$ip));    
+    if($ip_data && $ip_data->geoplugin_countryName != null){
+       $result = $ip_data->geoplugin_countryCode;
+    }
+  
+    if($result == 'ZA')
+    {
+    	?><a href='tel:0115544450'>011 554-4450</a><?php
+    	
+    }
+	elseif($result == 'GB'){
+		?><a href='tel:03301180000'>+44 330 118 0000</a><?php
+	}
+	elseif($result == 'UK'){
+		?><a href='tel:03301180000'>+44 330 118 0000</a><a href="#">Page</a>
+		<?php
+	}
+
+
+    else
+    {
+		?><a href='tel:+18006531389'>+1 (800) 653-1389</a><?php
+    }
+    
+} 
+
+function get_LocationInfoByIp() {
+  	wp_enqueue_script( 'ajax-script', get_template_directory_uri() . '/js/get-number.js');
+  	wp_localize_script( 'ajax-script', 'location_ip', array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
+ }
+add_action( 'wp_enqueue_scripts', 'get_LocationInfoByIp' );
+ 
+add_action( 'wp_ajax_nopriv_phone_by_ip', 'phone_by_ip' );
+add_action( 'wp_ajax_phone_by_ip', 'phone_by_ip' );
+
+function phone_by_ip(){
+ 	$get_loc = getLocationInfoByIp();
+ 	die();
+ }
+ 
+ // Footer css 
+add_action( 'get_footer', 'prefix_add_footer_styles' );
+function prefix_add_footer_styles() {
+    wp_enqueue_style( 'fontawesome', 'https://use.fontawesome.com/releases/v5.8.1/css/all.css?ver=d48ad5a88f4fe9535e80300f6d3d46a5' );
+};
+
+//ajax code
+
+jQuery.ajax({
+	  url: location_ip.ajax_url,
+	type: "post",
+	data: {
+			action : 'phone_by_ip',
+	  },
+	  success: function(response){
+		  jQuery('p.phone-by-ip').html(response); 
+			  // console.log(response);
+		//   console.log('Test');
+	}
+});
+
+
+// end country phone number
+
+
+
+// Start plugin
+
+<?php
+/**
+ * Plugin Name:       My Plugins
+ * Plugin URI:        #
+ * Description:       Test
+ * Version:           1.10.3
+ * Requires at least: 5.2
+ * Author:            Test
+ * Author URI:        #
+ * License:           GPL v2 or later
+ * License URI:       #
+ * Text Domain:       hide-category
+ * Domain Path:       /languages
+ */
+
+/*
+ * Exit if accessed directly
+ */
+if (!defined('ABSPATH')) {
+    exit;
+}
+
+define('SP_TEXTDOMAIN', 'specific-hide-category');
+define('SP_DIR', plugin_dir_url( __FILE__ ));
+
+/*
+ *Create a class called "Specific_Category_Hide" if it doesn't already exist
+ */
+class MySettingsPage
+{
+    /**
+     * Holds the values to be used in the fields callbacks
+     */
+    private $options;
+
+    /**
+     * Start up
+     */
+    public function __construct()
+    {
+        add_action( 'admin_menu', array( $this, 'add_plugin_page' ) );
+        add_action( 'admin_init', array( $this, 'page_init' ) );
+    }
+
+    /**
+     * Add options page
+     */
+    public function add_plugin_page()
+    {
+        // This page will be under "Settings"
+        add_options_page(
+            'Settings Admin', 
+            'My Settings', 
+            'manage_options', 
+            'my-setting-admin', 
+            array( $this, 'create_admin_page' )
+        );
+    }
+
+    /**
+     * Options page callback
+     */
+    public function create_admin_page()
+    {
+        // Set class property
+        $this->options = get_option( 'my_option_name' );
+        ?>
+        <div class="wrap">
+            <h1>My Settings</h1>
+            <form method="post" action="options.php">
+            <?php
+                // This prints out all hidden setting fields
+                settings_fields( 'my_option_group' );
+                do_settings_sections( 'my-setting-admin' );
+                submit_button();
+            ?>
+            </form>
+        </div>
+        <?php
+    }
+
+    /**
+     * Register and add settings
+     */
+    public function page_init()
+    {        
+        register_setting(
+            'my_option_group', // Option group
+            'my_option_name', // Option name
+            array( $this, 'sanitize' ) // Sanitize
+        );
+
+        add_settings_section(
+            'setting_section_id', // ID
+            'My Custom Settings', // Title
+            array( $this, 'print_section_info' ), // Callback
+            'my-setting-admin' // Page
+        );  
+
+        add_settings_field(
+            'id_number', // ID
+            'ID Number', // Title 
+            array( $this, 'id_number_callback' ), // Callback
+            'my-setting-admin', // Page
+            'setting_section_id' // Section           
+        );      
+
+        add_settings_field(
+            'title', 
+            'Title', 
+            array( $this, 'title_callback' ), 
+            'my-setting-admin', 
+            'setting_section_id'
+        );      
+    }
+
+    /**
+     * Sanitize each setting field as needed
+     *
+     * @param array $input Contains all settings fields as array keys
+     */
+    public function sanitize( $input )
+    {
+        $new_input = array();
+        if( isset( $input['id_number'] ) )
+            $new_input['id_number'] = absint( $input['id_number'] );
+
+        if( isset( $input['title'] ) )
+            $new_input['title'] = sanitize_text_field( $input['title'] );
+
+        return $new_input;
+    }
+
+    /** 
+     * Print the Section text
+     */
+    public function print_section_info()
+    {
+        print 'Enter your settings below:';
+    }
+
+    /** 
+     * Get the settings option array and print one of its values
+     */
+    public function id_number_callback()
+    {
+        printf(
+            '<input type="text" id="id_number" name="my_option_name[id_number]" value="%s" />',
+            isset( $this->options['id_number'] ) ? esc_attr( $this->options['id_number']) : ''
+        );
+    }
+
+    /** 
+     * Get the settings option array and print one of its values
+     */
+    public function title_callback()
+    {
+        printf(
+            '<input type="text" id="title" name="my_option_name[title]" value="%s" />',
+            isset( $this->options['title'] ) ? esc_attr( $this->options['title']) : ''
+        );
+    }
+}
+
+if( is_admin() )
+    $my_settings_page = new MySettingsPage();
+
+//end plugin
+
+
+// background image hover effect css 
+	background-position: bottom !important;
+    	transition: 5s !important;
+//end background image hover effect css
+
+/* End */
+/* End funtion.php */
+
+
+
+/* End Function.php */
