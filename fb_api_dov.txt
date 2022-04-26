@@ -1,0 +1,141 @@
+EAAtriZCUyPzMBAMZCcbokB9b6p1YxzPqZCVeKNMb8Ia4LfLguZBSNNoyNpjoxPMlncrBPYlrRQ5TRRGnA9w4dO4mxNjMXEfm0p76eZCvxI4opyUhCkbOmIjUlcrb6eqxiU1h70IxfdYKGWFnnFPJOIZALvRC1Xrolr5e4zs1v4MmZBpdE8t6qXCO2XzQZA4GG44CkwLNOIQHvz5CNXfu6BWV
+
+
+
+
+https://graph.facebook.com/oauth/access_token?grant_type=fb_exchange_token&client_id=3214473602154291&client_secret=6ab1777998b4ebb003888c8f0762ee18&fb_exchange_token=EAAtriZCUyPzMBAMZCcbokB9b6p1YxzPqZCVeKNMb8Ia4LfLguZBSNNoyNpjoxPMlncrBPYlrRQ5TRRGnA9w4dO4mxNjMXEfm0p76eZCvxI4opyUhCkbOmIjUlcrb6eqxiU1h70IxfdYKGWFnnFPJOIZALvRC1Xrolr5e4zs1v4MmZBpdE8t6qXCO2XzQZA4GG44CkwLNOIQHvz5CNXfu6BWV
+
+
+https://graph.facebook.com/{page-id}/feed
+     ?access_token={access-token}"
+	 
+	 
+	 EAAtriZCUyPzMBAPLjgZCnohp6BzOEEeiW0snFJCHgN8EGC7KYK2PWeekrjK9IuDYipy3RrNtOPuW44DraulKoZAJpvfRieqWb8Yz9PYCX8gdbM7087nhVkWCJ2GkyLVALmcLE9bliMY0AEoWaiLko9qGAtkdc3qZCK43cXYIHCm85X5VfYJp
+	 
+	 
+	 
+	 
+	 https://graph.facebook.com/2536455826484333/accounts?access_token=EAAtriZCUyPzMBAPLjgZCnohp6BzOEEeiW0snFJCHgN8EGC7KYK2PWeekrjK9IuDYipy3RrNtOPuW44DraulKoZAJpvfRieqWb8Yz9PYCX8gdbM7087nhVkWCJ2GkyLVALmcLE9bliMY0AEoWaiLko9qGAtkdc3qZCK43cXYIHCm85X5VfYJp
+
+https://graph.facebook.com/oauth/access_token?grant_type=fb_exchange_token&client_id=3214473602154291&client_secret=6ab1777998b4ebb003888c8f0762ee18&fb_exchange_token=EAAtriZCUyPzMBAEnVK1x2q3vJI7iBS0lj2VGvBuZAaAnl9ERpyqSVwQZA382SPPCeG0VYJz1BU85p3een4PPz7J9LiknZAAfHGXw44Hfv5Qke8OyR9tItYUw3YU5QvIeHZAukiMqLHadW9EvnYTkQgPjB1FKS2MCNjRGzflBClTZCza1MTC6Uvz1BSVlgmrc88RZC9ETPO1BZA04UeVu0QacRVy72sA2aJZC1ssCO7tz3FdqrI2f9bYzs
+
+https://graph.facebook.com/3214473602154291?metadata=1&access_token=EAAtriZCUyPzMBAAZBQFraPr9QoKo0dgyz2eO3YAKprtJ1LJRuHVbp5lDw3zQKnMZCQDL7FGufogFqS9CXuzPL45Bkd9Y6ePW1jtlkuf6svI9yc057ZBBUPNwt5gkrnS7iUzs4BklDQZC7X1Cly50VFshpJZBSZCMiIcrELcHRayiZBYyQ5SJEO0D78xPlO0giqjZBI5kPUZC2JhIIDC1vXiSKjA9QxKmy19ZAII0nx3e3wfIkBZC7oS5yDH6
+
+
+
+
+
+https://graph.facebook.com/oauth/access_token?type=client_cred&client_id=3214473602154291&client_secret=uAkzKclNQppRgMxPpaUbY3HVmn0
+
+https://graph.facebook.com/{api-endpoint}&access_token={your-app_id}|{your-app_secret}
+
+https://graph.facebook.com/oauth/access_token?client_id=3214473602154291&client_secret=6ab1777998b4ebb003888c8f0762ee18&grant_type=client_credentials
+
+
+<?php
+function fbLikeCount($id,$appid,$appsecret){
+  $json_url ='https://graph.facebook.com/'.$id.'?access_token='.$appid.'|'.$appsecret.'&fields=fan_count';
+  $json = file_get_contents($json_url);
+  $json_output = json_decode($json);
+  //Extract the likes count from the JSON object
+  if($json_output->fan_count){
+    return $fan_count = $json_output->fan_count;
+  }else{
+    return 0;
+  }
+}
+echo fbLikeCount('coregenie','___APPID___','___APPSECRET___');
+?>
+title="WordPress.org"
+rating="3"
+
+
+
+
+https://graph.facebook.com/3214473602154291/insights/page_fans_country?access_token=EAAtriZCUyPzMBAJHNN4GYJbdsQdVmAQjxHDnmsyVSM6jP2BBXqkhOJwbTAa8RBRHqZCl15f16wv13LuMdXw2SlgZBCuwsPnkixjs3KSPSOUVDWOhwcIVtY6ZCIKZCr6i2RmtasFKyhMLDMvsxG6eHESZBl6guK8DNQEPbGvZBM7FrG8lLWlnxb2BHjBPnfOoFRKZB1nZCAZBWuujgIO8CCwJzsYsSWMZB7Ekvj0thu6CEcSNYs4ARzLVOqh
+
+
+// Facebook //
+function getFacebookLike( $fbid, $token ){ 
+$json_string = @file_get_contents('https://graph.facebook.com/v5.0/'. esc_attr( $fbid ) .'/?fields=fan_count&access_token='. esc_attr( $token ) );
+$json = json_decode($json_string, true); 
+$like_count = isset( $json['fan_count'] ) ? $json['fan_count'] : 0;
+return $like_count;
+}
+
+
+
+[social-counter-list]
+
+[social-counter-fb id="114549221230166"]
+
+[fan-count-list]
+rating=3
+
+
+I have checked facebook graph page api.
+I have displayed facebook page name.
+
+I have displayed total page followers
+I have checked facebook group followers
+
+
+
+
+https://graph.facebook.com/1010373919474753/opted_in_members&access_token=EAAtriZCUyPzMBAA3duL6vYTUDfLPB7ZC1Eaux7TRewobDZBeIBC7pBZA6XD8WFZAwLC9VQ14TxgIk1KwKjONJDguP6JyJo71jAhUv2WZBJG01mcMWwoNZBfKa33QM7vZCOZAP1MNZCmPPKrAxXF6WkKCM4aOinZBRsZAyPq86dWxxjOgxgHqKE2HzDiIDJ9fAsbBaYQvwP2on5dnNwZDZD
+
+https://graph.facebook.com/2536455826484333?access_token=EAAtriZCUyPzMBAA3duL6vYTUDfLPB7ZC1Eaux7TRewobDZBeIBC7pBZA6XD8WFZAwLC9VQ14TxgIk1KwKjONJDguP6JyJo71jAhUv2WZBJG01mcMWwoNZBfKa33QM7vZCOZAP1MNZCmPPKrAxXF6WkKCM4aOinZBRsZAyPq86dWxxjOgxgHqKE2HzDiIDJ9fAsbBaYQvwP2on5dnNwZDZD&fields=name,fan_count
+
+https://graph.facebook.com/me?access_token=EAAtriZCUyPzMBAHxN3DBwT87RnK2Vq5HZCnIv2VPPzUNYznU9MpPZCpCVmiwOERUB8SA4ECSiM7eNkW5rklLqs87H5UPxwjyVPvkqlKxZCqZAicaITKiWjNVhMg3ZAFNBfUf8Nj5uIvpHbN3hmZBu0XhOkfjk2s2WPrQjC0ayNcn5CwioHpOQ3u64z8enoCGIrIPqzVaOF2WQZDZD
+
+
+https://graph.facebook.com/v9.0/3214473602154291/insights?metric=impressions,follower_count,profile_views,reach,email_contacts,text_message_clicks,website_clicks&period=day&access_token=EAAtriZCUyPzMBAC1i6BXmEqN75JAklUFRUFyN9Bng9ZAjlz8NHamQ31rgXGNY0qgvD1GzAGHxal9hlEyyCz4CIzaMPTeSXhOiIUrb6Nx7WJ4F1ngSq0ZBShGuWtyIJBZBtGd9TuGYUF7yOOa7voKFWzjwLeuwoZB0CZCq5GPEVKjvPshJUB8zFppH1O8NGtKTLxJyoVUytgwZDZD
+
+
+https://graph.facebook.com/1010373919474753/feed?limit=5&amp;access_token=EAAtriZCUyPzMBAIRKBS056XYZBVP0daxX1VZCDkUmdfwTfVZB2KLaWIkW57ucu5MWgyhao7jAGFPtS1hSFhkcMnbkYZCqe7zFZCRAGU4tCfhZAPrzFzBEh84IbdMcf0P3nm9d82woMc9zAubyNGyr3lzOgvOLwQPKFKoR7Y0uHPFGSpg75ygZB24NT2y98NbWoqAwW9ksnQO8UFhkFCnbVxQtj3jwQZCT6xNdseGbiRqUe3AwDECpsUJT
+
+
+https://graph.facebook.com/1010373919474753?fields=members.limit(0).summary(true)
+https://graph.facebook.com/413501336787113/members?limit=1500&access_token=EAAtriZCUyPzMBAPtd4fs9lc7uuacWZBI96XcFpnooeK293GqLWZC183bfz7ODWli4LP2Futlo3Hz6fXGwUjUll8rGwLXPgieqj5Oz41I6HMYfpDPZBnetrM3ZCgsIjfrvGZCLhJ2M3M3DjDCeDALYOeI8Ar71peCQ6hd3JIP7MAIOY5QFwd22fkTKr1aT58UWXgg6UehiwQ750yFMYJ2keP8CH6ZA2O1cNErKVsDmSzrITCBSsnitRp
+
+https://graph.facebook.com/413501336787113/opted_in_members&access_token=EAAtriZCUyPzMBAPtd4fs9lc7uuacWZBI96XcFpnooeK293GqLWZC183bfz7ODWli4LP2Futlo3Hz6fXGwUjUll8rGwLXPgieqj5Oz41I6HMYfpDPZBnetrM3ZCgsIjfrvGZCLhJ2M3M3DjDCeDALYOeI8Ar71peCQ6hd3JIP7MAIOY5QFwd22fkTKr1aT58UWXgg6UehiwQ750yFMYJ2keP8CH6ZA2O1cNErKVsDmSzrITCBSsnitRp
+
+
+https://graph.facebook.com/413501336787113/feed?limit=5&amp;access_token=EAAtriZCUyPzMBAPtd4fs9lc7uuacWZBI96XcFpnooeK293GqLWZC183bfz7ODWli4LP2Futlo3Hz6fXGwUjUll8rGwLXPgieqj5Oz41I6HMYfpDPZBnetrM3ZCgsIjfrvGZCLhJ2M3M3DjDCeDALYOeI8Ar71peCQ6hd3JIP7MAIOY5QFwd22fkTKr1aT58UWXgg6UehiwQ750yFMYJ2keP8CH6ZA2O1cNErKVsDmSzrITCBSsnitRp
+
+
+https://graph.facebook.com/413501336787113/feed?limit=5&amp;access_token=EAAtriZCUyPzMBAKZC1jIZAhW7edpCL0BzDM1cVzzZBUEskBKL83Fq50rxzRyslZAar3KYB8dCZCvFk4uTexdSQxuhKuaLXQVuLI0v528j7xkU670KZBt2p05ujbNnHbFotnwA1znz0l1jQVfZCZCElZBxsvk6d4cAwAZC9ZCrPAR2ZANnvU8oqu9Kd7GfQx0zQoZB18Pfab93xZBy8WrUG56Om9ZCgmI6sU4eL9HqFMJh9ZAhaXG4cSUIPYHisstv
+
+
+https://graph.facebook.com/413501336787113/user_groups;access_token=EAAtriZCUyPzMBAKZC1jIZAhW7edpCL0BzDM1cVzzZBUEskBKL83Fq50rxzRyslZAar3KYB8dCZCvFk4uTexdSQxuhKuaLXQVuLI0v528j7xkU670KZBt2p05ujbNnHbFotnwA1znz0l1jQVfZCZCElZBxsvk6d4cAwAZC9ZCrPAR2ZANnvU8oqu9Kd7GfQx0zQoZB18Pfab93xZBy8WrUG56Om9ZCgmI6sU4eL9HqFMJh9ZAhaXG4cSUIPYHisstv
+
+EAAtriZCUyPzMBAMhs3WG4wE4l9tKcCYht0ez7HPEmSAKlfDIHpIFAQoV6oCodFinh7cguYegLZC2nJfch51f9AGt9rcDrqMgujA8rx14HrKHc9lgBNy8pRkA5iN6kSClYBwKuXZATcsCO0LaYTMLjN2zzQ643xqrbQFgtiYWLufZBsUdHZCGxYHPpmQZAZCsMsQYUzByIjvpMVCXjyH3ViZCZBzjqRL6zkjaC8Fr3Ou70ZANOY0YJpd5XV
+
+EAAtriZCUyPzMBAEOZAO4PcUlZAdBoaiKCCmJY4iyFKJqoknvBtCm5pQveMnFs3ZBYZCKnhVZAXRn1WXdZAWwH22m2dtUUXcMOzd7yQOe6bVDvqKjZBjwg0Of3w9KB1UxbPJbZCQuMbAhZCe7d3yLtx9NGC170HMfZACfNs3UYseDmgPlFN5ofS0cm2KjmI0oALFDn9qbWZCCIQ8nmvUzzD3CnSu1FbpQjEpM6PmnSJuX9ZBLC2ZCNZClLZB8d1pL
+
+
+https://graph.facebook.com/oauth/access_token?client_id=3214473602154291&client_secret=6ab1777998b4ebb003888c8f0762ee18&grant_type=client_credentials
+
+https://graph.facebook.com/oauth/access_token?grant_type=fb_exchange_token&client_id=APP-ID&client_secret=APP-SECRET&fb_exchange_token=SHORT-LIVED-USER-ACCESS-TOKEN
+
+https://graph.facebook.com/2536455826484333/feeds?access_token=EAAtriZCUyPzMBAIICBigDMXqZCuJIMJnJfZCmV2cKWZBxARydfVZAj1OFqZAwnkQhjvffCbn9oVZAqs729ZCv5FZAvvbdD3KPjpLen4BeQrfFNiDxGPfMfcZCB29S3qgkKEf0Fe7WHBI1ngAxfokS5j2BgVavZBmGWbhX28KZBr5spostz7QHtoCRWgdeZCXZA6ASIPk33myE0321urJZBZC7F3zJL6n
+114549221230166
+
+811548072242927
+[group-list]
+
+https://www.facebook.com/feeds/page.php?id=811548072242927&format=json
+
+<!--[test-sample]
+
+[fan-count-list]-->
+
+https://graph.facebook.com/413501336787113/groups?limit=1&amp;access_token=EAAtriZCUyPzMBAMfpEgAvf855A7F99tb9SFjI9kT43F6WZC30yirFfBP8Fp3HlVSy96PIjF8JHdemm5EabZAXc6lBqNzDYUGa94aia8U9jeBvzvBJH6RTso4uoa40KrkXWOut2TgzqC2wJcFnclcq66qSSKfV7ll0ppcKKJ83F9hC5QGa48Eq7gAxPayxQC9kSzp2iz1aYKY4w4QO5CVWblIxz4g1jHlEQklZBMRY7eicxImqV4q
+
+https://graph.facebook.com/413501336787113/feed?limit=1000&access_token=EAAtriZCUyPzMBAMfpEgAvf855A7F99tb9SFjI9kT43F6WZC30yirFfBP8Fp3HlVSy96PIjF8JHdemm5EabZAXc6lBqNzDYUGa94aia8U9jeBvzvBJH6RTso4uoa40KrkXWOut2TgzqC2wJcFnclcq66qSSKfV7ll0ppcKKJ83F9hC5QGa48Eq7gAxPayxQC9kSzp2iz1aYKY4w4QO5CVWblIxz4g1jHlEQklZBMRY7eicxImqV4q
+
+
+https://graph.facebook.com/2536455826484333/groups?access_token=EAAtriZCUyPzMBAMfpEgAvf855A7F99tb9SFjI9kT43F6WZC30yirFfBP8Fp3HlVSy96PIjF8JHdemm5EabZAXc6lBqNzDYUGa94aia8U9jeBvzvBJH6RTso4uoa40KrkXWOut2TgzqC2wJcFnclcq66qSSKfV7ll0ppcKKJ83F9hC5QGa48Eq7gAxPayxQC9kSzp2iz1aYKY4w4QO5CVWblIxz4g1jHlEQklZBMRY7eicxImqV4q&limit=250&fields=id,name
+
+
+https://www.youtube.com/watch?v=-RoZqpZN2RM
